@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.controllers.status_controller import router as status_router #registra as rotas do controller
-
+from app.controllers.demanda_controller import router as demanda_router
 app = FastAPI(
 
     title = 'Eficiência Energetica API',
@@ -10,3 +10,4 @@ app = FastAPI(
 
 
 app.include_router(status_router)
+app.include_router(demanda_router)
