@@ -9,7 +9,11 @@ def buscar_consumos():
 
      consumo['consumo_kwh'] = float(consumo['consumo_kwh'])
      consumo['demanda_contratada_kw'] = float(consumo['demanda_contratada_kw'])
+     consumo['demanda_medida_kw'] = float(consumo['demanda_medida_kw'])
+
     return consumos
+
+
 
 def calcular_consumo_total():
     consumos = buscar_consumos()
@@ -64,3 +68,19 @@ def calcular_menor_consumo():
    menor = min(consumos, key=lambda consumo: consumo["consumo_kwh"])
 
    return menor
+
+def obter_indicadores():
+
+   total = calcular_consumo_total()
+   media = calcular_media_consumo()
+   maior = calcular_maior_consumo()
+   menor = calcular_menor_consumo()
+
+   return {
+
+
+      "consumo_total_kwh": total,
+      "consumo_media_kwh": media,
+      "maior_consumo_kwh": maior,
+      "menor_consumo_kwh": menor
+   }

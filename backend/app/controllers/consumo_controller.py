@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.services.consumo_service import buscar_consumos, calcular_consumo_total, calcular_media_consumo, calcular_maior_consumo, calcular_menor_consumo
+from app.services.consumo_service import buscar_consumos, calcular_consumo_total, calcular_media_consumo, calcular_maior_consumo, calcular_menor_consumo, obter_indicadores
 
 router = APIRouter()
 
@@ -58,3 +58,10 @@ def obter_menor_consumo():
     return {
         "menor_consumo": menor
     }
+
+@router.get("/consumo/indicadores")
+
+def obter_indicadores_consumo():
+    indicadores = obter_indicadores()
+
+    return indicadores
