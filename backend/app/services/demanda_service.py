@@ -4,10 +4,11 @@ from app.services.consumo_service import buscar_consumos
 
 def verificar_risco(demanda_prevista):
     demanda_contratada = buscar_demanda_contratada()
+    limite = demanda_contratada * 1.05  # tolerância de 5% (ANEEL)
 
     diferenca = demanda_prevista - demanda_contratada
 
-    if diferenca > 0:
+    if demanda_prevista > limite:
         mensagem = 'Risco de ultrapassagem da demanda contratada'
         risco = True
     else: 
@@ -32,7 +33,7 @@ def verificar_ultrapassagens():
 
     for consumo in consumos:
 
-        if consumo['demanda_medida_kw'] > consumo['demanda_contratada_kw']:
+        if consumo['demanda_medida_kw'] > consumo['demanda_contratada_kw'] * 1.05:
 
             diferenca = consumo['demanda_medida_kw'] - consumo['demanda_contratada_kw']
             consumo['ultrapassagem_kw'] = diferenca

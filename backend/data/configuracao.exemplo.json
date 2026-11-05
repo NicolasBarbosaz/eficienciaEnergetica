@@ -1,0 +1,14 @@
+{
+  "empresa": {
+    "razao_social": "Distribuidora Exemplo Ltda.",
+    "cidade_uf": "Recife/PE",
+    "modalidade": "verde"
+  },
+  "demanda_contratada_kw": 80.0,
+  "tolerancia": 0.05,
+  "tarifa_demanda_rs_kw": 12.89,
+  "ponta_inicio": "17:30",
+  "ponta_fim": "20:30",
+  "fonte_dados": "memoria_massa",
+  "margem_seguranca_kw": 1.0
+}

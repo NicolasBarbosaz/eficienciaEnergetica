@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Antevê · Configurações</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; align-items: stretch; background: #F2F2EE; color: #16181B; font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased">
+
+  <aside aria-label="Menu" style="flex: 1 1 232px; box-sizing: border-box; padding: 24px 16px; background: #F8F8F5; border-right: 1px solid #E2E2DC; display: flex; flex-direction: column; gap: 28px">
+    <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 0 8px; text-decoration: none; color: #16181B">
+      <svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#16181B"></rect><path d="M6 10.5h16" stroke="#E3A21F" stroke-width="1.5" stroke-linecap="round"></path><path d="M6 20l3.5-3 3 1.5 3.5-6 3 3.5L22 14" fill="none" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="display: flex; flex-direction: column">
+        <span style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15">Antevê</span>
+        <span style="font-size: 12px; color: #686D73; line-height: 1.3">Veja o pico antes da multa.</span>
+      </span>
+    </a>
+    <nav aria-label="Principal" style="display: flex; flex-direction: column; gap: 2px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+        Painel
+      </a>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4"></path><path d="M3 4v4h4"></path><path d="M12 7.5V12l3 2"></path></svg>
+        Histórico
+      </a>
+      <a href="Contrato.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="m9 14.5 2 2 4-4.5"></path></svg>
+        Contrato ideal
+      </a>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+        Alertas e relatórios
+      </a>
+      <a href="Configuracoes.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; color: #16181B; background: #E8E8E2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><path d="M1 14h6"></path><path d="M9 8h6"></path><path d="M17 16h6"></path></svg>
+        Configurações
+      </a>
+    </nav>
+    <div style="margin-top: auto; padding: 16px 8px 0; border-top: 1px solid #E2E2DC; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-size: 13px; font-weight: 600">Distribuidora Exemplo Ltda.</span>
+      <span style="font-size: 12px; color: #686D73">Recife/PE · Grupo A · tarifa verde</span>
+    </div>
+  </aside>
+
+  <main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 20px clamp(16px, 3vw, 40px) 48px">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+
+      <header style="display: flex; flex-direction: column; gap: 4px">
+        <h1 style="margin: 0; font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em">Configurações</h1>
+        <p style="margin: 0; font-size: 14px; color: #4C5157">Cadastre o contrato e escolha como os dados chegam. Dá para mudar tudo depois.</p>
+      </header>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+
+        <div style="flex: 2 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+
+          <section aria-labelledby="h-emp" style="box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span aria-hidden="true" style="flex: 0 0 26px; height: 26px; border-radius: 50%; background: #16181B; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">1</span>
+              <h2 id="h-emp" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Dados da empresa</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px 20px">
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="f-razao" style="font-size: 13px; font-weight: 500">Razão social</label>
+                <input id="f-razao" type="text" value="{{f.razao}}" onChange="{{onRazao}}" autocomplete="organization" style="height: 40px; box-sizing: border-box; width: 100%; padding: 0 12px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="f-cnpj" style="font-size: 13px; font-weight: 500">CNPJ</label>
+                <input id="f-cnpj" type="text" inputmode="numeric" placeholder="00.000.000/0000-00" value="{{f.cnpj}}" onChange="{{onCnpj}}" style="height: 40px; box-sizing: border-box; width: 100%; padding: 0 12px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="f-cidade" style="font-size: 13px; font-weight: 500">Cidade/UF</label>
+                <input id="f-cidade" type="text" value="{{f.cidade}}" onChange="{{onCidade}}" style="height: 40px; box-sizing: border-box; width: 100%; padding: 0 12px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="f-mod" style="font-size: 13px; font-weight: 500">Grupo A · modalidade tarifária</label>
+                <select id="f-mod" value="{{f.modalidade}}" onChange="{{onModalidade}}" style="height: 40px; box-sizing: border-box; width: 100%; padding: 0 10px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+                  <option value="verde">Verde</option>
+                  <option value="azul">Azul</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="h-cont" style="box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span aria-hidden="true" style="flex: 0 0 26px; height: 26px; border-radius: 50%; background: #16181B; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">2</span>
+              <div>
+                <h2 id="h-cont" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Contrato de demanda</h2>
+                <p style="margin: 2px 0 0; font-size: 13px; color: #686D73">Os valores estão no contrato com a distribuidora e na fatura de energia.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: flex-end">
+              <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px">
+                <label for="f-dem" style="font-size: 13px; font-weight: 500">Demanda contratada</label>
+                <div style="position: relative">
+                  <input id="f-dem" type="text" inputmode="decimal" value="{{f.demanda}}" onChange="{{onDemanda}}" aria-describedby="f-dem-lim" style="height: 48px; box-sizing: border-box; width: 100%; padding: 0 48px 0 14px; border: 1.5px solid #16181B; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 20px; font-weight: 600; color: #16181B">
+                  <span aria-hidden="true" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 15px; color: #686D73">kW</span>
+                </div>
+              </div>
+              <div id="f-dem-lim" aria-live="polite" style="flex: 1 1 220px; box-sizing: border-box; min-height: 48px; padding: 8px 14px; border-radius: 8px; background: #FBEAE7; display: flex; align-items: center; justify-content: space-between; gap: 12px">
+                <span style="font-size: 13px; font-weight: 500; color: #B42318">Limite de multa</span>
+                <span style="font-size: 22px; font-weight: 600; color: #B42318">{{limLabel}}</span>
+              </div>
+            </div>
+
+            <sc-if value="{{invalid}}" hint-placeholder-val="{{ false }}">
+              <p role="alert" style="margin: -8px 0 0; font-size: 13px; color: #B42318">Informe a demanda em kW, por exemplo 80.</p>
+            </sc-if>
+
+            <div aria-hidden="true" style="display: flex; flex-direction: column; gap: 6px">
+              <div style="display: flex; height: 12px; border-radius: 3px; overflow: hidden; gap: 2px">
+                <span style="flex: 6; background: #8A948D"></span>
+                <span style="flex: 1.6; background: #E3A21F"></span>
+                <span style="flex: 2.4; background: #C9372C"></span>
+              </div>
+              <div style="display: flex; gap: 2px; font-size: 12px; line-height: 1.35">
+                <span style="flex: 6; color: #4C5157">Dentro do contratado<br><strong style="font-weight: 600; color: #16181B">até {{demLabel}}</strong></span>
+                <span style="flex: 1.6; color: #8A5300">Tolerância<br><strong style="font-weight: 600">até {{limLabel}}</strong></span>
+                <span style="flex: 2.4; color: #B42318; text-align: right">Multa<br><strong style="font-weight: 600">acima de {{limLabel}}</strong></span>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px 20px; padding-top: 18px; border-top: 1px solid #ECECE7">
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="f-tol" style="font-size: 13px; font-weight: 500">Tolerância</label>
+                <div style="position: relative">
+                  <input id="f-tol" type="text" inputmode="decimal" value="{{f.tol}}" onChange="{{onTol}}" aria-describedby="f-tol-help" style="height: 40px; box-sizing: border-box; width: 100%; padding: 0 40px 0 12px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+                  <span aria-hidden="true" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #686D73">%</span>
+                </div>
+                <span id="f-tol-help" style="font-size: 12px; color: #686D73">Padrão de 5%. Confirme no seu contrato.</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="f-tar" style="font-size: 13px; font-weight: 500">Tarifa de demanda</label>
+                <div style="position: relative">
+                  <span aria-hidden="true" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #686D73">R$</span>
+                  <input id="f-tar" type="text" inputmode="decimal" value="{{f.tarifa}}" onChange="{{onTarifa}}" aria-describedby="f-tar-help" style="height: 40px; box-sizing: border-box; width: 100%; padding: 0 48px 0 36px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+                  <span aria-hidden="true" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #686D73">/kW</span>
+                </div>
+                <span id="f-tar-help" style="font-size: 12px; color: #686D73">Valor por kW cobrado na fatura.</span>
+              </div>
+              <fieldset style="margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+                <legend style="padding: 0; margin-bottom: 6px; font-size: 13px; font-weight: 500">Horário de ponta</legend>
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <label for="f-pi" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Início</label>
+                  <input id="f-pi" type="time" value="{{f.pontaIni}}" onChange="{{onPontaIni}}" style="flex: 1; min-width: 0; height: 40px; box-sizing: border-box; padding: 0 8px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+                  <span aria-hidden="true" style="color: #686D73">às</span>
+                  <label for="f-pf" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Fim</label>
+                  <input id="f-pf" type="time" value="{{f.pontaFim}}" onChange="{{onPontaFim}}" style="flex: 1; min-width: 0; height: 40px; box-sizing: border-box; padding: 0 8px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+                </div>
+                <span style="font-size: 12px; color: #686D73">{{durLabel}} em dias úteis, quando a energia é mais cara.</span>
+              </fieldset>
+            </div>
+          </section>
+
+          <section aria-labelledby="h-fonte" style="box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <span aria-hidden="true" style="flex: 0 0 26px; height: 26px; border-radius: 50%; background: #16181B; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600">3</span>
+              <div>
+                <h2 id="h-fonte" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Fonte de dados</h2>
+                <p style="margin: 2px 0 0; font-size: 13px; color: #686D73">A inteligência é a mesma. Muda de onde vem o consumo e como você é avisado.</p>
+              </div>
+            </div>
+            <div role="radiogroup" aria-labelledby="h-fonte" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 12px">
+              <label style="position: relative; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; padding: {{cIot.pad}}; border: {{cIot.bd}}; border-radius: 12px; background: {{cIot.bg}}; cursor: pointer">
+                <input type="radio" name="fonte" value="iot" checked="{{isIot}}" onChange="{{pickIot}}" style="position: absolute; top: 18px; right: 18px; width: 18px; height: 18px; margin: 0; accent-color: #16181B; cursor: pointer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16181B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-6 4 12 2-6h6"></path></svg>
+                <span style="font-size: 15px; font-weight: 600; padding-right: 28px">Medidor IoT (tempo real)</span>
+                <span style="font-size: 13px; line-height: 1.5; color: #4C5157">Um medidor instalado no quadro envia o consumo a cada 15 min. O Antevê prevê as próximas horas e avisa na hora.</span>
+                <span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px">
+                  <span style="font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #F2F2EE; color: #4C5157">Alerta ao vivo</span>
+                  <span style="font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #F2F2EE; color: #4C5157">Requer instalação</span>
+                </span>
+              </label>
+              <label style="position: relative; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; padding: {{cMassa.pad}}; border: {{cMassa.bd}}; border-radius: 12px; background: {{cMassa.bg}}; cursor: pointer">
+                <input type="radio" name="fonte" value="massa" checked="{{isMassa}}" onChange="{{pickMassa}}" style="position: absolute; top: 18px; right: 18px; width: 18px; height: 18px; margin: 0; accent-color: #16181B; cursor: pointer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16181B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="M12 18v-6"></path><path d="m9.5 14.5 2.5-2.5 2.5 2.5"></path></svg>
+                <span style="font-size: 15px; font-weight: 600; padding-right: 28px">Memória de massa (envio de arquivo)</span>
+                <span style="font-size: 13px; line-height: 1.5; color: #4C5157">Você envia o arquivo de medição da distribuidora (CSV ou XLSX, mensal ou diário). O Antevê analisa o histórico e prevê o risco do próximo período.</span>
+                <span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px">
+                  <span style="font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #F2F2EE; color: #4C5157">Relatório com antecedência</span>
+                  <span style="font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #F2F2EE; color: #4C5157">Sem instalação</span>
+                </span>
+              </label>
+            </div>
+
+            <sc-if value="{{isIot}}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: flex-end; padding: 16px; border-radius: 10px; background: #F6F6F2">
+                <div style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 6px">
+                  <label for="f-med" style="font-size: 13px; font-weight: 500">Código do medidor</label>
+                  <input id="f-med" type="text" placeholder="Está na etiqueta do medidor" value="{{f.medidor}}" onChange="{{onMedidor}}" style="height: 40px; box-sizing: border-box; width: 100%; padding: 0 12px; border: 1px solid #CFCFC8; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #16181B">
+                </div>
+                <span style="flex: 1 1 200px; display: flex; align-items: center; gap: 8px; min-height: 40px; font-size: 13px; color: #4C5157">
+                  <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #9A9EA3"></span>
+                  Aguardando a primeira leitura
+                </span>
+              </div>
+            </sc-if>
+            <sc-if value="{{isMassa}}" hint-placeholder-val="{{ false }}">
+              <label for="f-arq" style="position: relative; display: flex; align-items: center; gap: 14px; padding: 16px; border: 1.5px dashed #BDBDB5; border-radius: 10px; background: #FAFAF8; cursor: pointer">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4C5157" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 22px"><path d="M12 15V4"></path><path d="m7 9 5-5 5 5"></path><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"></path></svg>
+                <span style="display: flex; flex-direction: column; gap: 2px">
+                  <span style="font-size: 14px; font-weight: 600">Envie o primeiro arquivo da distribuidora</span>
+                  <span style="font-size: 12px; color: #686D73">Arraste aqui ou escolha no computador · CSV ou XLSX, mensal ou diário</span>
+                </span>
+                <input id="f-arq" type="file" accept=".csv,.xlsx" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none">
+              </label>
+            </sc-if>
+          </section>
+
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+            <span style="font-size: 13px; color: #686D73">Você pode mudar tudo depois, aqui em Configurações.</span>
+            <a href="{{painelHref}}" style="display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 8px; background: #16181B; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">
+              Salvar e ir para o painel
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <aside aria-labelledby="h-res" style="flex: 1 1 280px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+          <h2 id="h-res" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Resumo do contrato</h2>
+          <div style="display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: 10px; background: #F6F6F2">
+            <span style="font-size: 13px; color: #4C5157">Limite de multa</span>
+            <span style="font-size: 36px; line-height: 1.1; font-weight: 600">{{limLabel}}</span>
+            <span style="font-size: 12px; line-height: 1.5; color: #686D73">{{demLabel}} contratados + {{tolLabel}} de tolerância. Acima disso, a fatura cobra ultrapassagem.</span>
+          </div>
+          <dl style="margin: 0; display: flex; flex-direction: column">
+            <div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #ECECE7">
+              <dt style="font-size: 13px; color: #4C5157">Demanda contratada</dt>
+              <dd style="margin: 0; font-size: 13px; font-weight: 600; text-align: right">{{demLabel}}</dd>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #ECECE7">
+              <dt style="font-size: 13px; color: #4C5157">Tolerância</dt>
+              <dd style="margin: 0; font-size: 13px; font-weight: 600; text-align: right">{{tolLabel}}</dd>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #ECECE7">
+              <dt style="font-size: 13px; color: #4C5157">Tarifa de demanda</dt>
+              <dd style="margin: 0; font-size: 13px; font-weight: 600; text-align: right">{{tarLabel}}</dd>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #ECECE7">
+              <dt style="font-size: 13px; color: #4C5157">Horário de ponta</dt>
+              <dd style="margin: 0; font-size: 13px; font-weight: 600; text-align: right">{{pontaLabel}}</dd>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0">
+              <dt style="font-size: 13px; color: #4C5157">Fonte de dados</dt>
+              <dd style="margin: 0; font-size: 13px; font-weight: 600; text-align: right">{{fonteLabel}}</dd>
+            </div>
+          </dl>
+          <p style="margin: 0; padding-top: 14px; border-top: 1px solid #ECECE7; font-size: 12px; line-height: 1.5; color: #686D73">O pico do mês é a maior medição de 15 min do ciclo. É ele que define a multa: se o pico já chegou a 82 kW, voltar a 82 não custa nada a mais.</p>
+        </aside>
+      </div>
+
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const D = { razao: 'Distribuidora Exemplo Ltda.', cnpj: '', cidade: 'Recife/PE', modalidade: 'verde', demanda: '80', tol: '5', tarifa: '14,43', pontaIni: '17:30', pontaFim: '20:30', fonte: 'iot', medidor: '' };
+    const f = Object.assign({}, D, s.f || {});
+    const on = (k) => (e) => {
+      const next = Object.assign({}, (this.state && this.state.f) || {});
+      next[k] = e.target.value;
+      this.setState({ f: next });
+    };
+    const pick = (v) => () => {
+      const next = Object.assign({}, (this.state && this.state.f) || {});
+      next.fonte = v;
+      this.setState({ f: next });
+    };
+    const fmt = (v, a, b) => Number(v).toLocaleString('pt-BR', { minimumFractionDigits: a, maximumFractionDigits: b });
+
+    const demTxt = String(f.demanda).trim();
+    const d = Number(demTxt.replace(',', '.'));
+    const valid = demTxt !== '' && isFinite(d) && d > 0;
+    const tolTxt = String(f.tol).trim();
+    const tolN = Number(tolTxt.replace(',', '.'));
+    const tol = tolTxt !== '' && isFinite(tolN) && tolN >= 0 ? tolN : 5;
+    const lim = valid ? Math.round(d * (1 + tol / 100) * 100) / 100 : 0;
+
+    const mins = (t) => {
+      const m = /^(\d{1,2}):(\d{2})/.exec(String(t));
+      return m ? Number(m[1]) * 60 + Number(m[2]) : null;
+    };
+    const a = mins(f.pontaIni);
+    const b = mins(f.pontaFim);
+    let dur = '—';
+    if (a !== null && b !== null) {
+      let x = b - a;
+      if (x <= 0) x += 1440;
+      const h = Math.floor(x / 60);
+      const mm = x % 60;
+      dur = h + ' h' + (mm ? ' ' + mm + ' min' : '');
+    }
+    const isIot = f.fonte !== 'massa';
+    const card = (sel) => ({ bd: sel ? '2px solid #16181B' : '1px solid #DADAD3', bg: sel ? '#FFFFFF' : '#FAFAF8', pad: sel ? '17px' : '18px' });
+
+    return {
+      f: f,
+      onRazao: on('razao'),
+      onCnpj: on('cnpj'),
+      onCidade: on('cidade'),
+      onModalidade: on('modalidade'),
+      onDemanda: on('demanda'),
+      onTol: on('tol'),
+      onTarifa: on('tarifa'),
+      onPontaIni: on('pontaIni'),
+      onPontaFim: on('pontaFim'),
+      onMedidor: on('medidor'),
+      pickIot: pick('iot'),
+      pickMassa: pick('massa'),
+      isIot: isIot,
+      isMassa: !isIot,
+      cIot: card(isIot),
+      cMassa: card(!isIot),
+      invalid: !valid,
+      limLabel: valid ? fmt(lim, 1, 2) + ' kW' : '—',
+      demLabel: valid ? fmt(d, 0, 2) + ' kW' : '—',
+      tolLabel: fmt(tol, 0, 2) + '%',
+      tarLabel: 'R$ ' + (String(f.tarifa).trim() || '—') + '/kW',
+      pontaLabel: (f.pontaIni || '—') + '–' + (f.pontaFim || '—'),
+      durLabel: dur,
+      fonteLabel: isIot ? 'Medidor IoT' : 'Memória de massa',
+      painelHref: isIot ? 'Main.dc.html' : 'Painel-Memoria.dc.html'
+    };
+  }
+}
+</script>
+</body>
+</html>

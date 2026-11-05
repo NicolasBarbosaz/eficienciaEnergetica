@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Antevê · Notificação no celular</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; position: relative; background: #1B1E22; color: #FFFFFF; font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; align-items: center; padding: 104px 16px 40px">
+  <span style="font-size: 17px; color: #D6D7D3">quarta-feira, 12 de agosto</span>
+  <span style="margin-top: 4px; font-size: 84px; line-height: 1; font-weight: 500; letter-spacing: -0.02em">13:17</span>
+
+  <a href="Celular-Alerta.dc.html" aria-label="Notificação do Antevê: risco de multa às 15h. Abrir alerta" style="margin-top: 64px; align-self: stretch; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; border-radius: 20px; background: #F4F4F1; color: #16181B; text-decoration: none; box-shadow: 0 10px 28px rgba(0,0,0,0.28)">
+    <span style="display: flex; align-items: center; gap: 8px">
+      <svg width="22" height="22" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#16181B"></rect><path d="M6 10.5h16" stroke="#E3A21F" stroke-width="1.5" stroke-linecap="round"></path><path d="M6 20l3.5-3 3 1.5 3.5-6 3 3.5L22 14" fill="none" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size: 13px; font-weight: 600">Antevê</span>
+      <span style="margin-left: auto; font-size: 12px; color: #686D73">agora</span>
+    </span>
+    <span style="font-size: 15px; line-height: 1.35; font-weight: 600">Risco de multa às 15h</span>
+    <span style="font-size: 14px; line-height: 1.45; color: #2B2F34">Previsão de 86,3 kW às 15h, 2,3 kW acima do limite. Se possível, adie até as 16h as cargas que podem esperar.</span>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

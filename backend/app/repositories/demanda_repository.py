@@ -1,8 +1,10 @@
 import csv 
 from pathlib import Path #vai ajudar a trabalhar com caminhos de arquivos e pastas.
+from app.repositories.configuracao_repository import buscar_configuracao
 
 def buscar_demanda_contratada():
- return 80.0
+    configuracao = buscar_configuracao()
+    return configuracao['demanda_contratada_kw'] if configuracao else 80.0
 
 
 

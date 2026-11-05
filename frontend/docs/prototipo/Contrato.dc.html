@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Antevê · Contrato ideal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; align-items: stretch; background: #F2F2EE; color: #16181B; font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.45; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased">
+
+  <aside aria-label="Menu" style="flex: 1 1 232px; box-sizing: border-box; padding: 24px 16px; background: #F8F8F5; border-right: 1px solid #E2E2DC; display: flex; flex-direction: column; gap: 28px">
+    <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 0 8px; text-decoration: none; color: #16181B">
+      <svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#16181B"></rect><path d="M6 10.5h16" stroke="#E3A21F" stroke-width="1.5" stroke-linecap="round"></path><path d="M6 20l3.5-3 3 1.5 3.5-6 3 3.5L22 14" fill="none" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="display: flex; flex-direction: column">
+        <span style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15">Antevê</span>
+        <span style="font-size: 12px; color: #686D73; line-height: 1.3">Veja o pico antes da multa.</span>
+      </span>
+    </a>
+    <nav aria-label="Principal" style="display: flex; flex-direction: column; gap: 2px">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+        Painel
+      </a>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4"></path><path d="M3 4v4h4"></path><path d="M12 7.5V12l3 2"></path></svg>
+        Histórico
+      </a>
+      <a href="Contrato.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; color: #16181B; background: #E8E8E2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="m9 14.5 2 2 4-4.5"></path></svg>
+        Contrato ideal
+      </a>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+        Alertas e relatórios
+      </a>
+      <a href="Configuracoes.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; color: #4C5157">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><path d="M1 14h6"></path><path d="M9 8h6"></path><path d="M17 16h6"></path></svg>
+        Configurações
+      </a>
+    </nav>
+    <div style="margin-top: auto; padding: 16px 8px 0; border-top: 1px solid #E2E2DC; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-size: 13px; font-weight: 600">Distribuidora Exemplo Ltda.</span>
+      <span style="font-size: 12px; color: #686D73">Recife/PE · Grupo A · tarifa verde</span>
+    </div>
+  </aside>
+
+  <main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 20px clamp(16px, 3vw, 40px) 48px">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+
+      <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap">
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap">
+          <h1 style="margin: 0; font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em">Contrato ideal</h1>
+          <span style="display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 12px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DADAD3; font-size: 13px; font-weight: 500">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4C5157" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+            Histórico de set/2025 a jul/2026 · 10 meses com dados
+          </span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px 18px; flex-wrap: wrap; font-size: 13px; color: #4C5157">
+          <span>Contratado hoje <strong style="font-weight: 600; color: #16181B">80 kW</strong></span>
+          <span>Limite de multa <strong style="font-weight: 600; color: #16181B">84,0 kW</strong></span>
+          <a href="Configuracoes.dc.html" style="color: #16181B; font-weight: 500">Editar contrato</a>
+        </div>
+      </header>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+        <section aria-labelledby="h-recom" style="flex: 2 1 560px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 14px; font-weight: 500; color: #4C5157">Recomendação</span>
+            <h2 id="h-recom" style="margin: 0; font-size: 34px; line-height: 1.15; font-weight: 600; letter-spacing: -0.01em">Contratar 88 kW</h2>
+            <p style="margin: 0; font-size: 15px; line-height: 1.5; max-width: 62ch">Nos 10 meses analisados, 88 kW teriam custado <strong style="font-weight: 600">R$ 1.941 a menos</strong> que os 80 kW de hoje, sem nenhum mês com multa.</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch">
+            <div style="flex: 1 1 200px; box-sizing: border-box; padding: 16px; border-radius: 10px; background: #F6F6F2; display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 13px; color: #4C5157">Hoje · 80 kW</span>
+              <span style="font-size: 24px; line-height: 1.25; font-weight: 600">R$ 14.011</span>
+              <span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #B42318">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+                5 meses com multa
+              </span>
+            </div>
+            <div aria-hidden="true" style="display: flex; align-items: center; color: #686D73">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+            </div>
+            <div style="flex: 1 1 200px; box-sizing: border-box; padding: 16px; border-radius: 10px; background: #E8F2EB; display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 13px; color: #1F6B43">Recomendado · 88 kW</span>
+              <span style="font-size: 24px; line-height: 1.25; font-weight: 600">R$ 12.069</span>
+              <span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #1F6B43">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 4.5-5"></path></svg>
+                nenhum mês com multa · folga de 1,51 kW
+              </span>
+            </div>
+          </div>
+          <p style="margin: 0; font-size: 12px; color: #686D73">Custo de demanda no período = demanda faturada + ultrapassagem.</p>
+        </section>
+
+        <section aria-labelledby="h-why" style="flex: 1 1 280px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+          <h2 id="h-why" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Por que 88 kW e não 87 kW?</h2>
+          <p style="margin: 0; font-size: 14px; line-height: 1.55">87 kW é o ótimo matemático e economizaria R$ 89 a mais. Mas, no pior mês (abr/26), a folga seria de só 0,46 kW.</p>
+          <p style="margin: 0; font-size: 14px; line-height: 1.55">Com 88 kW, a folga sobe para 1,51 kW, mais de três vezes maior, para absorver um verão um pouco mais quente.</p>
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px">
+            <span style="font-size: 12px; color: #686D73">Folga no pior mês (abr/26)</span>
+            <div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 64px; align-items: center; gap: 10px; font-size: 13px">
+              <span>87 kW</span>
+              <span style="position: relative; height: 10px; border-radius: 2px; background: #ECECE6"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 30.5%; border-radius: 2px; background: #E3A21F"></span></span>
+              <span style="text-align: right; font-weight: 600">0,46 kW</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 52px minmax(0, 1fr) 64px; align-items: center; gap: 10px; font-size: 13px">
+              <span>88 kW</span>
+              <span style="position: relative; height: 10px; border-radius: 2px; background: #ECECE6"><span style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 2px; background: #4E9A6E"></span></span>
+              <span style="text-align: right; font-weight: 600">1,51 kW</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section aria-labelledby="h-sim" style="box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+        <div>
+          <h2 id="h-sim" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Simulador de contrato</h2>
+          <p style="margin: 4px 0 0; font-size: 13px; color: #686D73">Escolha um valor entre 75 e 95 kW para ver quanto os últimos 10 meses teriam custado.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px 36px; align-items: stretch">
+
+          <div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <label for="sim-kw" style="font-size: 14px; font-weight: 500; color: #4C5157">Demanda contratada simulada</label>
+              <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
+                <span style="font-size: 44px; line-height: 1; font-weight: 600; letter-spacing: -0.02em">{{simLabel}}</span>
+                <span style="font-size: 20px; font-weight: 500; color: #4C5157">kW</span>
+                <sc-if value="{{hasTag}}" hint-placeholder-val="{{ true }}">
+                  <span style="align-self: center; display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 500; background: {{tagBg}}; color: {{tagFg}}; border: 1px solid {{tagBd}}">{{tag}}</span>
+                </sc-if>
+              </div>
+              <span style="font-size: 13px; color: #686D73">Limite de multa: <strong style="font-weight: 600; color: #16181B">{{limLabel}}</strong></span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <input id="sim-kw" type="range" min="75" max="95" step="1" value="{{sim}}" onChange="{{onSim}}" style="width: 100%; height: 24px; margin: 0; accent-color: #16181B; cursor: pointer">
+              <div aria-hidden="true" style="position: relative; height: 16px; margin: 0 8px; font-size: 12px; color: #686D73">
+                <span style="position: absolute; left: 0; transform: translateX(-50%)">75</span>
+                <span style="position: absolute; left: 25%; transform: translateX(-50%)">80</span>
+                <span style="position: absolute; left: 50%; transform: translateX(-50%)">85</span>
+                <span style="position: absolute; left: 75%; transform: translateX(-50%)">90</span>
+                <span style="position: absolute; left: 100%; transform: translateX(-50%)">95</span>
+              </div>
+            </div>
+
+            <div role="group" aria-label="Atalhos do simulador" style="display: flex; flex-wrap: wrap; gap: 8px">
+              <button type="button" aria-pressed="{{is80}}" onClick="{{pick80}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; background: {{c80.bg}}; color: {{c80.fg}}; border: 1px solid {{c80.bd}}">80 kW · atual</button>
+              <button type="button" aria-pressed="{{is87}}" onClick="{{pick87}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; background: {{c87.bg}}; color: {{c87.fg}}; border: 1px solid {{c87.bd}}">87 kW · ótimo matemático</button>
+              <button type="button" aria-pressed="{{is88}}" onClick="{{pick88}}" style="height: 34px; padding: 0 12px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; background: {{c88.bg}}; color: {{c88.fg}}; border: 1px solid {{c88.bd}}">88 kW · recomendado</button>
+            </div>
+
+            <dl aria-live="polite" style="margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #E2E2DC; border: 1px solid #E2E2DC; border-radius: 10px; overflow: hidden">
+              <div style="background: #FFFFFF; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px">
+                <dt style="font-size: 12px; color: #686D73">Custo de demanda no período</dt>
+                <dd style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">{{custoLabel}}</dd>
+              </div>
+              <div style="background: #FFFFFF; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px">
+                <dt style="font-size: 12px; color: #686D73">Economia vs. contrato atual</dt>
+                <dd style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600; color: {{ecoColor}}">{{ecoLabel}}</dd>
+                <dd style="margin: 0; font-size: 12px; color: #686D73">{{ecoNote}}</dd>
+              </div>
+              <div style="background: #FFFFFF; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px">
+                <dt style="font-size: 12px; color: #686D73">Meses com multa</dt>
+                <dd style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600; color: {{mesesColor}}">{{mesesLabel}}</dd>
+              </div>
+              <div style="background: #FFFFFF; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px">
+                <dt style="font-size: 12px; color: #686D73">Folga no pior mês (abr/26)</dt>
+                <dd style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600; color: {{folgaColor}}">{{folgaLabel}}</dd>
+                <dd style="margin: 0; font-size: 12px; color: #686D73">{{folgaNote}}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div style="flex: 2 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
+              <h3 style="margin: 0; font-size: 14px; font-weight: 600">Economia por valor de contrato</h3>
+              <span style="font-size: 12px; color: #686D73">Clique no gráfico para simular um valor</span>
+            </div>
+            <div style="overflow-x: auto; overflow-y: hidden">
+              <div style="min-width: 520px; box-sizing: border-box; padding: 8px 8px 0 52px">
+                <div style="position: relative; height: 300px">
+                  <svg viewBox="0 0 840 300" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block">
+                    <line x1="0" y1="44.44" x2="840" y2="44.44" stroke="#ECECE7" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                    <line x1="0" y1="100" x2="840" y2="100" stroke="#ECECE7" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                    <line x1="0" y1="155.56" x2="840" y2="155.56" stroke="#ECECE7" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                    <line x1="0" y1="266.67" x2="840" y2="266.67" stroke="#ECECE7" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                    <path d="M20 211.11 L20 291.48 L60 264.14 L100 249.62 L140 236.08 L180 223.29 L220 211.11 Z" fill="#C9372C" fill-opacity="0.09"></path>
+                    <path d="M220 211.11 L260 198.93 L300 186.75 L340 162.76 L380 142.6 L420 124.99 L460 109.94 L500 98.34 L540 103.26 L580 108.79 L620 114.92 L660 121.82 L700 129.39 L740 136.96 L780 144.53 L820 152.11 L820 211.11 Z" fill="#1F8A4C" fill-opacity="0.09"></path>
+                    <line x1="0" y1="211.11" x2="840" y2="211.11" stroke="#A9A9A2" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                    <path d="M20 291.48 L60 264.14 L100 249.62 L140 236.08 L180 223.29 L220 211.11 L260 198.93 L300 186.75 L340 162.76 L380 142.6 L420 124.99 L460 109.94 L500 98.34 L540 103.26 L580 108.79 L620 114.92 L660 121.82 L700 129.39 L740 136.96 L780 144.53 L820 152.11" fill="none" stroke="#16181B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                  </svg>
+
+                  <span style="position: absolute; left: -52px; width: 44px; text-align: right; top: 14.815%; transform: translateY(-50%); font-size: 12px; color: #686D73">3 mil</span>
+                  <span style="position: absolute; left: -52px; width: 44px; text-align: right; top: 33.333%; transform: translateY(-50%); font-size: 12px; color: #686D73">2 mil</span>
+                  <span style="position: absolute; left: -52px; width: 44px; text-align: right; top: 51.852%; transform: translateY(-50%); font-size: 12px; color: #686D73">1 mil</span>
+                  <span style="position: absolute; left: -52px; width: 44px; text-align: right; top: 70.37%; transform: translateY(-50%); font-size: 12px; color: #686D73">R$ 0</span>
+                  <span style="position: absolute; left: -52px; width: 44px; text-align: right; top: 88.889%; transform: translateY(-50%); font-size: 12px; color: #686D73">−1 mil</span>
+
+                  <span style="position: absolute; left: 3%; top: 73%; font-size: 11px; font-weight: 500; color: #B42318; white-space: nowrap">custo a mais</span>
+                  <span style="position: absolute; left: 80%; top: 58%; font-size: 11px; font-weight: 500; color: #1F6B43; white-space: nowrap">economia</span>
+
+                  <span style="position: absolute; left: 26.19%; top: 70.37%; width: 10px; height: 10px; margin: -5px 0 0 -5px; box-sizing: border-box; border-radius: 50%; border: 2px solid #686D73; background: #FFFFFF"></span>
+                  <span style="position: absolute; left: 26.19%; top: 70.37%; transform: translate(-50%, 10px); font-size: 12px; color: #4C5157; white-space: nowrap">Atual · 80 kW</span>
+
+                  <div style="position: absolute; right: 40.476%; top: 0; box-sizing: border-box; padding: 7px 10px; border: 1px solid #DADAD3; border-radius: 8px; background: #FFFFFF; font-size: 12px; line-height: 1.4; white-space: nowrap; text-align: right">
+                    <div style="font-weight: 600">Ótimo matemático: 87 kW</div>
+                    <div>economia de R$ 2.030</div>
+                    <div style="color: #8A5300">folga de 0,46 kW no pior mês</div>
+                  </div>
+                  <span style="position: absolute; left: 59.524%; top: 72px; width: 1px; height: calc(32.779% - 77px); background: #686D73"></span>
+                  <div style="position: absolute; left: 64.286%; top: 0; box-sizing: border-box; padding: 7px 10px; border: 1.5px solid #1F6B43; border-radius: 8px; background: #E8F2EB; font-size: 12px; line-height: 1.4; white-space: nowrap">
+                    <div style="font-weight: 600">Recomendado: 88 kW</div>
+                    <div>economia de R$ 1.941</div>
+                    <div style="color: #1F6B43">folga de 1,51 kW</div>
+                  </div>
+                  <span style="position: absolute; left: 64.286%; top: 72px; width: 1.5px; height: calc(34.42% - 77px); background: #1F6B43"></span>
+                  <span style="position: absolute; left: 59.524%; top: 32.779%; width: 10px; height: 10px; margin: -5px 0 0 -5px; box-sizing: border-box; border-radius: 50%; border: 2px solid #16181B; background: #FFFFFF; z-index: 1"></span>
+                  <span style="position: absolute; left: 64.286%; top: 34.42%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: #1F6B43; box-shadow: 0 0 0 2px #FFFFFF; z-index: 1"></span>
+
+                  <span style="position: absolute; top: 0; bottom: 0; left: {{selX}}%; width: 1px; background: rgba(22,24,27,0.5); z-index: 2; pointer-events: none"></span>
+                  <span style="position: absolute; left: {{selX}}%; top: {{selY}}%; width: 14px; height: 14px; margin: -7px 0 0 -7px; box-sizing: border-box; border-radius: 50%; border: 3px solid #16181B; background: #FFFFFF; box-shadow: 0 0 0 2px #FFFFFF; z-index: 2; pointer-events: none"></span>
+
+                  <div style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex; z-index: 3">
+                    <sc-for list="{{cols}}" as="c" hint-placeholder-count="21">
+                      <button type="button" aria-label="{{c.aria}}" onClick="{{c.pick}}" style="flex: 1; height: 100%; padding: 0; border: 0; background: transparent; cursor: pointer"></button>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="position: relative; height: 18px; margin-top: 8px; font-size: 12px; color: #686D73">
+                  <span style="position: absolute; left: 2.381%; transform: translateX(-50%)">75</span>
+                  <span style="position: absolute; left: 26.19%; transform: translateX(-50%)">80</span>
+                  <span style="position: absolute; left: 50%; transform: translateX(-50%)">85</span>
+                  <span style="position: absolute; left: 73.81%; transform: translateX(-50%)">90</span>
+                  <span style="position: absolute; left: 97.619%; transform: translateX(-50%)">95</span>
+                </div>
+                <div style="margin-top: 4px; text-align: center; font-size: 12px; color: #686D73">Demanda contratada (kW) · economia em R$ nos 10 meses</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+        <section aria-labelledby="h-tab" style="flex: 2 1 640px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+          <div>
+            <h2 id="h-tab" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Mês a mês: contrato atual × recomendado</h2>
+            <p style="margin: 4px 0 0; font-size: 13px; color: #686D73">Custo de demanda de cada mês com 80 kW e com 88 kW contratados.</p>
+          </div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px">
+              <thead>
+                <tr>
+                  <th scope="col" rowspan="2" style="text-align: left; vertical-align: bottom; padding: 6px 12px 8px 0; font-weight: 500; color: #686D73; border-bottom: 1px solid #E2E2DC">Mês</th>
+                  <th scope="col" rowspan="2" style="text-align: right; vertical-align: bottom; padding: 6px 12px 8px; font-weight: 500; color: #686D73; border-bottom: 1px solid #E2E2DC">Pico</th>
+                  <th scope="colgroup" colspan="2" style="text-align: left; padding: 6px 12px 4px 16px; font-weight: 600; color: #16181B; border-bottom: 1px solid #ECECE7">Atual · 80 kW</th>
+                  <th scope="colgroup" colspan="2" style="text-align: left; padding: 6px 12px 4px 16px; font-weight: 600; color: #1F6B43; border-bottom: 1px solid #ECECE7">Recomendado · 88 kW</th>
+                  <th scope="col" rowspan="2" style="text-align: right; vertical-align: bottom; padding: 6px 0 8px 12px; font-weight: 500; color: #686D73; border-bottom: 1px solid #E2E2DC">Economia com 88 kW</th>
+                </tr>
+                <tr>
+                  <th scope="col" style="text-align: left; padding: 4px 12px 8px 16px; font-weight: 500; color: #686D73; border-bottom: 1px solid #E2E2DC">Situação</th>
+                  <th scope="col" style="text-align: right; padding: 4px 12px 8px; font-weight: 500; color: #686D73; border-bottom: 1px solid #E2E2DC">Custo</th>
+                  <th scope="col" style="text-align: left; padding: 4px 12px 8px 16px; font-weight: 500; color: #686D73; border-bottom: 1px solid #E2E2DC">Situação</th>
+                  <th scope="col" style="text-align: right; padding: 4px 12px 8px; font-weight: 500; color: #686D73; border-bottom: 1px solid #E2E2DC">Custo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{rows}}" as="r" hint-placeholder-count="11">
+                  <tr style="background: {{r.bg}}">
+                    <th scope="row" style="text-align: left; padding: 8px 12px 8px 0; font-weight: 500; border-bottom: 1px solid #EFEFEA">{{r.m}}</th>
+                    <td style="text-align: right; padding: 8px 12px; border-bottom: 1px solid #EFEFEA">{{r.p}}</td>
+                    <td style="padding: 8px 12px 8px 16px; border-bottom: 1px solid #EFEFEA; color: {{r.s80c}}; white-space: nowrap"><span aria-hidden="true" style="display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: {{r.d80}}"></span>{{r.s80}}</td>
+                    <td style="text-align: right; padding: 8px 12px; border-bottom: 1px solid #EFEFEA; white-space: nowrap">{{r.c80}}</td>
+                    <td style="padding: 8px 12px 8px 16px; border-bottom: 1px solid #EFEFEA; color: {{r.s88c}}; white-space: nowrap"><span aria-hidden="true" style="display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: {{r.d88}}"></span>{{r.s88}}</td>
+                    <td style="text-align: right; padding: 8px 12px; border-bottom: 1px solid #EFEFEA; white-space: nowrap">{{r.c88}}</td>
+                    <td style="text-align: right; padding: 8px 0 8px 12px; border-bottom: 1px solid #EFEFEA; font-weight: 600; white-space: nowrap; color: {{r.dc}}">{{r.diff}}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row" style="text-align: left; padding: 12px 12px 4px 0; font-weight: 600">Total</th>
+                  <td style="padding: 12px 12px 4px; color: #686D73; text-align: right">10 meses</td>
+                  <td style="padding: 12px 12px 4px 16px; color: #B42318; font-weight: 500">5 com multa</td>
+                  <td style="text-align: right; padding: 12px 12px 4px; font-weight: 600; white-space: nowrap">R$ 14.010,57</td>
+                  <td style="padding: 12px 12px 4px 16px; color: #1F6B43; font-weight: 500">nenhuma multa</td>
+                  <td style="text-align: right; padding: 12px 12px 4px; font-weight: 600; white-space: nowrap">R$ 12.069,23</td>
+                  <td style="text-align: right; padding: 12px 0 4px 12px; font-weight: 600; white-space: nowrap; color: #1F6B43">+R$ 1.941,34</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #686D73">Tolerância: acima do contratado, mas até 5% acima dele, sem multa. Nos meses frios, 88 kW custam R$ 109,04 a mais por mês; nos meses quentes, evitam a multa.</p>
+        </section>
+
+        <section aria-labelledby="h-prem" style="flex: 1 1 260px; min-width: 0; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E2E2DC; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+          <h2 id="h-prem" style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Premissas</h2>
+          <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.5">
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="flex: 0 0 6px; height: 6px; margin-top: 7px; border-radius: 50%; background: #8A5300"></span><span><strong style="font-weight: 600">Tolerância de 5%</strong> sobre a demanda contratada. Confirme esse valor no seu contrato.</span></li>
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="flex: 0 0 6px; height: 6px; margin-top: 7px; border-radius: 50%; background: #8A5300"></span><span><strong style="font-weight: 600">Período sem janeiro/2026.</strong> A análise usa 10 meses: set/2025 a jul/2026.</span></li>
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="flex: 0 0 6px; height: 6px; margin-top: 7px; border-radius: 50%; background: #9A9EA3"></span><span>Ultrapassagem: os R$ 2.511,07 faturados no período, distribuídos entre os meses pelo kW excedente.</span></li>
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="flex: 0 0 6px; height: 6px; margin-top: 7px; border-radius: 50%; background: #9A9EA3"></span><span>Demanda faturada: o maior valor entre o contratado e o pico do mês, a R$ 13,63/kW (média do período).</span></li>
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="flex: 0 0 6px; height: 6px; margin-top: 7px; border-radius: 50%; background: #9A9EA3"></span><span>Outras penalidades (R$ 537,55) ficam fora da simulação.</span></li>
+          </ul>
+          <p style="margin: auto 0 0; padding-top: 12px; border-top: 1px solid #ECECE7; font-size: 12px; line-height: 1.5; color: #686D73">Simulação feita sobre o histórico. Não garante o valor das próximas faturas.</p>
+        </section>
+      </div>
+
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const set = (o) => this.setState(o);
+    const fmt = (v, d) => Number(v).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+    // Simulação por valor contratado (75 a 95 kW): custo de demanda nos 10 meses, economia vs. 80 kW,
+    // meses com multa e folga no pior mês (abr/26, pico de 90,89 kW)
+    const SIM = [
+      { c: 75, custo: 15457.28, eco: -1446.71, meses: 6, folga: -12.14 },
+      { c: 76, custo: 14965.16, eco: -954.59, meses: 5, folga: -11.09 },
+      { c: 77, custo: 14703.66, eco: -693.09, meses: 5, folga: -10.04 },
+      { c: 78, custo: 14459.92, eco: -449.35, meses: 5, folga: -8.99 },
+      { c: 79, custo: 14229.79, eco: -219.22, meses: 5, folga: -7.94 },
+      { c: 80, custo: 14010.57, eco: 0, meses: 5, folga: -6.89 },
+      { c: 81, custo: 13791.35, eco: 219.22, meses: 5, folga: -5.84 },
+      { c: 82, custo: 13572.12, eco: 438.45, meses: 5, folga: -4.79 },
+      { c: 83, custo: 13140.26, eco: 870.31, meses: 4, folga: -3.74 },
+      { c: 84, custo: 12777.33, eco: 1233.24, meses: 3, folga: -2.69 },
+      { c: 85, custo: 12460.41, eco: 1550.16, meses: 2, folga: -1.64 },
+      { c: 86, custo: 12189.45, eco: 1821.12, meses: 1, folga: -0.59 },
+      { c: 87, custo: 11980.64, eco: 2029.93, meses: 0, folga: 0.46 },
+      { c: 88, custo: 12069.23, eco: 1941.34, meses: 0, folga: 1.51 },
+      { c: 89, custo: 12168.73, eco: 1841.84, meses: 0, folga: 2.56 },
+      { c: 90, custo: 12279.13, eco: 1731.44, meses: 0, folga: 3.61 },
+      { c: 91, custo: 12403.30, eco: 1607.27, meses: 0, folga: 4.66 },
+      { c: 92, custo: 12539.60, eco: 1470.97, meses: 0, folga: 5.71 },
+      { c: 93, custo: 12675.90, eco: 1334.67, meses: 0, folga: 6.76 },
+      { c: 94, custo: 12812.20, eco: 1198.37, meses: 0, folga: 7.81 },
+      { c: 95, custo: 12948.50, eco: 1062.07, meses: 0, folga: 8.86 }
+    ];
+    let sim = typeof s.sim === 'number' ? s.sim : 88;
+    if (sim < 75) sim = 75;
+    if (sim > 95) sim = 95;
+    const r = SIM[sim - 75];
+
+    const l100 = sim * 105;
+    const whole = Math.floor(l100 / 100);
+    const frac = l100 % 100;
+    const limLabel = whole + ',' + (frac % 10 === 0 ? String(frac / 10) : String(frac).padStart(2, '0')) + ' kW';
+
+    const ecoPos = r.eco >= 0.5;
+    const ecoNeg = r.eco <= -0.5;
+    const tag = sim === 88 ? 'Recomendado' : sim === 87 ? 'Ótimo matemático' : sim === 80 ? 'Contrato atual' : '';
+    const chip = (on) => ({ bg: on ? '#16181B' : '#FFFFFF', fg: on ? '#FFFFFF' : '#16181B', bd: on ? '#16181B' : '#CFCFC8' });
+
+    // Tabela mês a mês (80 kW x 88 kW)
+    const ROWS = [
+      ['set/25', '76,1', 'd', '1.090,40', 'd', '1.199,44', -109.04],
+      ['out/25', '78,8', 'd', '1.090,40', 'd', '1.199,44', -109.04],
+      ['nov/25', '88,7', 'm', '1.709,01', 't', '1.208,98', 500.03],
+      ['dez/25', '89,9', 'm', '1.794,34', 't', '1.225,34', 569.00],
+      ['jan/26', '—', 'x', '—', 'x', '—', null],
+      ['fev/26', '86,7', 'm', '1.566,80', 'd', '1.199,44', 367.36],
+      ['mar/26', '87,5', 'm', '1.623,69', 'd', '1.199,44', 424.25],
+      ['abr/26', '90,9', 'm', '1.864,73', 't', '1.238,83', 625.90],
+      ['mai/26', '77,3', 'd', '1.090,40', 'd', '1.199,44', -109.04],
+      ['jun/26', '77,5', 'd', '1.090,40', 'd', '1.199,44', -109.04],
+      ['jul/26', '74,9', 'd', '1.090,40', 'd', '1.199,44', -109.04]
+    ];
+    const ST = {
+      d: { t: 'Dentro', c: '#4C5157', dot: '#8A948D' },
+      t: { t: 'Tolerância', c: '#8A5300', dot: '#E3A21F' },
+      m: { t: 'Multa', c: '#B42318', dot: '#C9372C' },
+      x: { t: 'sem dados', c: '#686D73', dot: 'transparent' }
+    };
+    const rows = ROWS.map((x) => ({
+      m: x[0],
+      p: x[1] === '—' ? '—' : x[1] + ' kW',
+      s80: ST[x[2]].t, s80c: ST[x[2]].c, d80: ST[x[2]].dot,
+      c80: x[3] === '—' ? '—' : 'R$ ' + x[3],
+      s88: ST[x[4]].t, s88c: ST[x[4]].c, d88: ST[x[4]].dot,
+      c88: x[5] === '—' ? '—' : 'R$ ' + x[5],
+      diff: x[6] === null ? '—' : (x[6] > 0 ? '+R$ ' : '−R$ ') + fmt(Math.abs(x[6]), 2),
+      dc: x[6] === null ? '#686D73' : x[6] > 0 ? '#1F6B43' : '#4C5157',
+      bg: x[6] === null ? '#FAFAF8' : 'transparent'
+    }));
+
+    return {
+      sim: sim,
+      simLabel: String(sim),
+      limLabel: limLabel,
+      hasTag: tag !== '',
+      tag: tag,
+      tagBg: sim === 88 ? '#E8F2EB' : sim === 87 ? '#FBF0DA' : '#F2F2EE',
+      tagFg: sim === 88 ? '#1F6B43' : sim === 87 ? '#8A5300' : '#4C5157',
+      tagBd: sim === 88 ? '#C2DDCB' : sim === 87 ? '#F0D9A8' : '#DADAD3',
+      onSim: (e) => set({ sim: Number(e.target.value) }),
+      is80: sim === 80,
+      is87: sim === 87,
+      is88: sim === 88,
+      c80: chip(sim === 80),
+      c87: chip(sim === 87),
+      c88: chip(sim === 88),
+      pick80: () => set({ sim: 80 }),
+      pick87: () => set({ sim: 87 }),
+      pick88: () => set({ sim: 88 }),
+      custoLabel: 'R$ ' + fmt(Math.round(r.custo), 0),
+      ecoLabel: (ecoNeg ? '−' : '') + 'R$ ' + fmt(Math.round(Math.abs(r.eco)), 0),
+      ecoNote: ecoPos ? 'a menos que com 80 kW' : ecoNeg ? 'a mais que com 80 kW' : 'é o contrato de hoje',
+      ecoColor: ecoPos ? '#1F6B43' : ecoNeg ? '#B42318' : '#16181B',
+      mesesLabel: r.meses + ' de 10',
+      mesesColor: r.meses > 0 ? '#B42318' : '#1F6B43',
+      folgaLabel: r.folga >= 0 ? fmt(r.folga, 2) + ' kW' : 'passa ' + fmt(-r.folga, 2) + ' kW',
+      folgaColor: r.folga < 0 ? '#B42318' : r.folga < 1 ? '#8A5300' : '#1F6B43',
+      folgaNote: r.folga < 0 ? 'acima do limite: multa' : r.folga < 1 ? 'abaixo do limite, por pouco' : 'abaixo do limite',
+      selX: (((sim - 75) * 40 + 20) / 840 * 100).toFixed(3),
+      selY: ((3800 - r.eco) / 5400 * 100).toFixed(3),
+      cols: SIM.map((x) => ({ aria: 'Simular ' + x.c + ' kW', pick: () => set({ sim: x.c }) })),
+      rows: rows
+    };
+  }
+}
+</script>
+</body>
+</html>
