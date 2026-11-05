@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from app.controllers.status_controller import router as status_router #registra as rotas do controller
-from app.controllers.demanda_controller import router as demanda_router
+from app.controllers.demanda_controller import router as demanda_router#registra as rotas do controlle
 from app.controllers.consumo_controller import router as consumo_router 
 from app.controllers.alerta_controller import router as alerta_router
+from app.controllers.importacao_controller import router as importacao_router
 
 
 app = FastAPI(
@@ -12,9 +12,8 @@ app = FastAPI(
     version = '1.0.0'
 )
 
-
-app.include_router(status_router)
 app.include_router(demanda_router)
 app.include_router(consumo_router)
 app.include_router(alerta_router)
+app.include_router(importacao_router)
 
