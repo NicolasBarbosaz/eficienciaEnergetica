@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+.pytest_cache/
+data/configuracao.json
+data/medicoes.csv
+data/medicoes_info.json
