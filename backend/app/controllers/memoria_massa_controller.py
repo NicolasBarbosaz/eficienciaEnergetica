@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from app.repositories.medicoes_repository import listar_medicoes
-from app.services import analise_service
+from app.services import alertas_mensais_service, analise_service, previsao_service
 from app.services.configuracao_service import obter_configuracao
 from app.services.medicoes_service import importar_exemplo, resumo
 
@@ -59,3 +59,26 @@ def consultar_contrato_ideal():
 def consultar_recomendacoes():
     serie, config = _contexto()
     return analise_service.recomendacoes(serie, config)
+
+
+@router.get("/previsao/proximo-mes")
+def consultar_previsao_proximo_mes():
+    serie, config = _contexto()
+    return previsao_service.previsao_proximo_mes(serie, config)
+
+
+@router.get("/alertas")
+def consultar_alertas():
+    serie, config = _contexto()
+    previsao = previsao_service.previsao_proximo_mes(serie, config)
+    return alertas_mensais_service.listar_alertas(serie, config, previsao)
+
+
+@router.get("/alertas/{id}")
+def consultar_alerta(id: str):
+    serie, config = _contexto()
+    previsao = previsao_service.previsao_proximo_mes(serie, config)
+    alerta = alertas_mensais_service.buscar_alerta(id, serie, config, previsao)
+    if alerta is None:
+        raise HTTPException(status_code=404, detail="Alerta não encontrado")
+    return alerta
