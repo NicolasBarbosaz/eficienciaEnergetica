@@ -7,7 +7,7 @@ from app.controllers.importacao_controller import router as importacao_router
 
 app = FastAPI(
 
-    title = 'Eficiência Energetica API',
+    title = 'Antevê API',
     description = 'API para análise e previão de demanda energética',
     version = '1.0.0'
 )
