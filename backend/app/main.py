@@ -3,6 +3,7 @@ from app.controllers.demanda_controller import router as demanda_router#registra
 from app.controllers.consumo_controller import router as consumo_router 
 from app.controllers.alerta_controller import router as alerta_router
 from app.controllers.importacao_controller import router as importacao_router
+from app.controllers.configuracao_controller import router as configuracao_router
 
 
 app = FastAPI(
@@ -16,4 +17,5 @@ app.include_router(demanda_router)
 app.include_router(consumo_router)
 app.include_router(alerta_router)
 app.include_router(importacao_router)
+app.include_router(configuracao_router)
 
