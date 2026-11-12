@@ -52,9 +52,26 @@ def salvar_medicoes(serie, info):
         'data_hora': [t.isoformat() for t in serie_ordenada.index],
         'demanda_kw': serie_ordenada.to_numpy(dtype=float),
     })
-    df.to_csv(caminho_csv, index=False)
+
+    #fazendo esse processo de arquivo temporario, tem menos chance de quebrar o codigo enquanto fazer o import do CSV
+
+
+    caminho_temporario = caminho_csv.with_suffix(".tmp")   #grava ele primeiro em um arquivo temporário
+
+    df.to_csv(caminho_temporario, index=False)   #grava os novos dados, preservando o csv atual enquanto acontece a gravação
+
+
+
 
     if info is not None:
         caminho_json = caminho_info()
-        with open(caminho_json, mode='w', encoding='utf-8') as arquivo:
+
+        caminho_temporario_json = caminho_json.with_suffix(".tmp") #mesmo esquema de gravar em um arquivo temporario e so dps de todo o processo substituir pelo arquivo normal.
+
+
+        with open(caminho_temporario_json, mode='w', encoding='utf-8') as arquivo:
             json.dump(info, arquivo, ensure_ascii=False, indent=2)
+
+        os.replace(caminho_temporario_json, caminho_json)  
+
+    os.replace(caminho_temporario, caminho_csv)
