@@ -3,6 +3,41 @@ import pandas as pd
 from fastapi import HTTPException
 
 
+def ler_csv(conteudo: bytes):
+    # lê o csv nos dois formatos aceitos e devolve sempre as colunas timestamp e valor_eletricidade_original
+    # formato padrão: timestamp,valor_eletricidade_original
+    # formato da distribuidora: Data;Hora;Demanda ativa (kW), com data dd/mm/aaaa e vírgula decimal
+    try:
+        texto = conteudo.decode("utf-8-sig")  # o utf-8-sig tira o BOM que o Excel coloca no começo
+    except UnicodeDecodeError:
+        texto = conteudo.decode("latin-1")  # arquivos salvos pelo Excel no Windows
+
+    primeira_linha = texto.split("\n", 1)[0]
+
+    if ";" not in primeira_linha:  # formato padrão, separado por vírgula
+        return pd.read_csv(io.StringIO(texto))
+
+    df = pd.read_csv(io.StringIO(texto), sep=";", dtype=str)
+    colunas = {coluna.strip().lower(): coluna for coluna in df.columns}
+    coluna_kw = next((coluna for nome, coluna in colunas.items() if "(kw)" in nome), None)
+
+    if "data" not in colunas or "hora" not in colunas or coluna_kw is None:
+        return df  # a verificação de colunas recusa o arquivo com a mensagem de sempre
+
+    valores = df[coluna_kw].str.strip()
+    if valores.str.contains(",", regex=False).any():  # vírgula decimal: tira o ponto do milhar e troca a vírgula
+        valores = valores.str.replace(".", "", regex=False).str.replace(",", ".", regex=False)
+
+    return pd.DataFrame({
+        "timestamp": pd.to_datetime(
+            df[colunas["data"]].str.strip() + " " + df[colunas["hora"]].str.strip(),
+            dayfirst=True,
+            errors="coerce"
+        ),
+        "valor_eletricidade_original": valores,
+    })
+
+
 def ler_memoria_massa(conteudo: bytes, unidade: str):
 
      unidade = unidade.strip().lower()
@@ -14,7 +49,7 @@ def ler_memoria_massa(conteudo: bytes, unidade: str):
           )
      
      try:  #aqui ele tenta ler o arquivo e informe uma erro caso for vazio ou inválido
-         df = pd.read_csv(io.BytesIO(conteudo))
+         df = ler_csv(conteudo)
      except (pd.errors.ParserError, UnicodeDecodeError, pd.errors.EmptyDataError):
           raise HTTPException(
                status_code=400,
