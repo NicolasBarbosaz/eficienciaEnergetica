@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens do Antevê (seção 7.3 da spec).
+   Claros em :root, escuros em .dark. Todo token em :root também existe em .dark
+   (um teste em src/lib/globals.test.ts confere isso). */
+
+:root {
+  color-scheme: light;
+
+  --pagina: #F2F2EE;
+  --superficie: #FFFFFF;
+  --menu: #F8F8F5;
+  --menu-ativo: #E8E8E2;
+  --borda: #E2E2DC;
+  --divisoria: #ECECE7;
+  --eixo: #C9C9C2;
+  --tinta: #16181B;
+  --tinta-2: #4C5157;
+  --tinta-3: #686D73;
+
+  --dentro-preenchimento: #8A948D;
+  --dentro-texto: #1F6B43;
+  --dentro-fundo: #E8F2EB;
+  --dentro-borda: #C2DDCB;
+
+  --amber-preenchimento: #E3A21F;
+  --amber-linha: #B9760C;
+  --amber-texto: #8A5300;
+  --amber-fundo: #FBF0DA;
+  --amber-borda: #F0D9A8;
+
+  --multa-preenchimento: #C9372C;
+  --multa-linha: #C9372C;
+  --multa-texto: #B42318;
+  --multa-fundo: #FBEAE7;
+  --multa-borda: #F2C3BC;
+
+  --economia: #4E9A6E;
+
+  --mapa-0: #F1F1EE;
+  --mapa-1: #F4D99F;
+  --mapa-2: #EDC277;
+  --mapa-3: #DD9F3E;
+  --mapa-4: #BD7D1C;
+  --mapa-5: #8C5207;
+
+  --sem-dados: #ECECE7;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --pagina: #121315;
+  --superficie: #1B1C1F;
+  --menu: #161719;
+  --menu-ativo: #2A2C30;
+  --borda: #33363B;
+  --divisoria: #26282C;
+  --eixo: #4A4E55;
+  --tinta: #EDEDE8;
+  --tinta-2: #B9BCC0;
+  --tinta-3: #9CA0A6;
+
+  --dentro-preenchimento: #87918A;
+  --dentro-texto: #7DCB9D;
+  --dentro-fundo: #16261D;
+  --dentro-borda: #2A4A35;
+
+  --amber-preenchimento: #E3A21F;
+  --amber-linha: #F2B544;
+  --amber-texto: #F2C46B;
+  --amber-fundo: #2A2113;
+  --amber-borda: #4D3B17;
+
+  --multa-preenchimento: #E0483C;
+  --multa-linha: #F0645A;
+  --multa-texto: #F79A90;
+  --multa-fundo: #2D1714;
+  --multa-borda: #5C2A24;
+
+  --economia: #66BE8C;
+
+  --mapa-0: #23252A;
+  --mapa-1: #463A20;
+  --mapa-2: #6B5223;
+  --mapa-3: #9A6D22;
+  --mapa-4: #C98D26;
+  --mapa-5: #F2B640;
+
+  --sem-dados: #2C2E33;
+}
+
+@theme inline {
+  --font-sans: var(--font-plex);
+
+  --color-pagina: var(--pagina);
+  --color-superficie: var(--superficie);
+  --color-menu: var(--menu);
+  --color-menu-ativo: var(--menu-ativo);
+  --color-borda: var(--borda);
+  --color-divisoria: var(--divisoria);
+  --color-eixo: var(--eixo);
+  --color-tinta: var(--tinta);
+  --color-tinta-2: var(--tinta-2);
+  --color-tinta-3: var(--tinta-3);
+
+  --color-dentro-preenchimento: var(--dentro-preenchimento);
+  --color-dentro-texto: var(--dentro-texto);
+  --color-dentro-fundo: var(--dentro-fundo);
+  --color-dentro-borda: var(--dentro-borda);
+
+  --color-amber-preenchimento: var(--amber-preenchimento);
+  --color-amber-linha: var(--amber-linha);
+  --color-amber-texto: var(--amber-texto);
+  --color-amber-fundo: var(--amber-fundo);
+  --color-amber-borda: var(--amber-borda);
+
+  --color-multa-preenchimento: var(--multa-preenchimento);
+  --color-multa-linha: var(--multa-linha);
+  --color-multa-texto: var(--multa-texto);
+  --color-multa-fundo: var(--multa-fundo);
+  --color-multa-borda: var(--multa-borda);
+
+  --color-economia: var(--economia);
+
+  --color-mapa-0: var(--mapa-0);
+  --color-mapa-1: var(--mapa-1);
+  --color-mapa-2: var(--mapa-2);
+  --color-mapa-3: var(--mapa-3);
+  --color-mapa-4: var(--mapa-4);
+  --color-mapa-5: var(--mapa-5);
+
+  --color-sem-dados: var(--sem-dados);
+}
+
+html,
+body {
+  background: var(--pagina);
+  color: var(--tinta);
+}
+
+body {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Foco visível e consistente nos dois modos (seção 7.3). */
+:where(button, a, [role='button'], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}

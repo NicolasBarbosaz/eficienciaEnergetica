@@ -1,4 +1,4 @@
-# Antevê: especificação para o Claude Code (v5.2)
+# Antevê: especificação para o Claude Code (v5.5)
 
 Leia tudo antes de começar. Esta versão substitui as anteriores: o app passa a ser só o fluxo de memória de massa, e o modo IoT fica apenas na apresentação teórica.
 
@@ -14,14 +14,14 @@ Leia tudo antes de começar. Esta versão substitui as anteriores: o app passa a
 
   O modo IoT (tempo real) **não será implementado**: fica na apresentação como proposta, com o protótipo como referência visual.
 - **O backend é do Nicolas.** O código novo entra em arquivos novos, no mesmo padrão dele (`controllers → services → repositories`). Nos arquivos dele mudam só as linhas listadas na seção 4.1, incluindo a regra dos 5%, já confirmada. Os módulos novos **usam** as funções dele em vez de alterá-las: a classificação de cada mês usa `verificar_risco`.
-- **Divisão combinada com o Nicolas:** a importação da memória de massa é dele (`POST /importacao/memoria-massa`: ler, validar e salvar as leituras). A nossa parte é a análise, a previsão, os alertas e o front, lendo o que a importação salva. O formato salvo é o contrato entre as duas partes (seção 5.2). Não mexa nos arquivos de importação dele, nem para corrigir erro: me avise.
+- **Divisão combinada com o Nicolas:** a importação da memória de massa é dele (`POST /importacao/memoria-massa`: ler, validar e salvar as leituras). A nossa parte é a análise, a previsão, os alertas e o front, lendo o que a importação salva. O formato salvo é o contrato entre as duas partes (seção 5.2). Não mexa nos arquivos de importação dele, nem para corrigir erro: me avise. A única exceção é a mudança dos dois formatos (seção 5.8), combinada com ele.
 - **O "algoritmo" fica todo no backend:**
   - **Cálculos:** pico de cada mês, multa pela regra da ANEEL, contrato ideal e mapa de picos. São contas exatas e testadas.
   - **Previsão:** o modelo LightGBM prevê o próximo mês.
 
   O front só exibe. A única conta no front é a prévia do limite enquanto a pessoa digita, em Configurações.
-- **A previsão é honesta.** O modelo acerta o consumo típico (erro de cerca de 6% hora a hora), mas não antecipa picos súbitos (erro de cerca de 8 kW nos picos). Por isso, na previsão do próximo mês:
-  - o modelo entra com o consumo e o pico típico;
+- **A previsão é honesta.** O modelo acerta a demanda típica (erro de cerca de 6% hora a hora), mas não antecipa picos súbitos (erro de cerca de 8 kW nos picos). Por isso, na previsão do próximo mês:
+  - o modelo entra com o pico típico, em kW;
   - o risco de multa vem do histórico do mesmo mês no arquivo.
 
   Os textos da tela dizem isso.
@@ -30,7 +30,10 @@ Leia tudo antes de começar. Esta versão substitui as anteriores: o app passa a
   - `backend/exemplos/memoria_massa_bobcat.csv`.
 
   O `referencia.py` é a especificação executável da leitura do arquivo, das contas e da previsão. O `README.md` traz os valores de conferência dos testes. Se esses arquivos não estiverem lá quando chegar o commit 5, me peça.
-- **Ordem do trabalho:** primeiro o backend, com commits por partes; depois o front inteiro, num commit só (seção 4.2).
+- **Ordem do trabalho:** o backend da nossa parte (commits 1 a 7) já está pronto e no `main`. Agora vêm a mudança dos dois formatos na importação (seção 5.8) e o front inteiro, num commit só (seção 4.2). Fora isso, o backend não muda: se faltar algo nele, me avise antes de mexer.
+- **Unidade:** o app trabalha e mostra tudo em kW (demanda). Nenhuma tela mostra kWh nem MWh, mesmo que a API devolva campos de consumo (`consumo_kwh`, `consumo_previsto_kwh`).
+- **Dois formatos de arquivo:** a importação aceita o formato da distribuidora (demanda em kW) e o formato padrão do Nicolas (kWh de hora em hora), e converte tudo para kW (seções 5.2 e 5.8).
+- **Modo claro e escuro:** o app tem os dois, com um botão no cabeçalho. No primeiro acesso, segue o sistema; depois, vale a escolha da pessoa (seção 7.3).
 - **Organização do repositório:** a raiz fica só com as pastas `backend/` e `frontend/`. Esta documentação fica em `frontend/docs/`.
 
 ## 1. Produto
@@ -61,7 +64,7 @@ Leia tudo antes de começar. Esta versão substitui as anteriores: o app passa a
 eficienciaEnergetica/
   backend/      FastAPI do Nicolas + módulos novos (seção 5)
     model/      modelos LightGBM, README.md com os valores de conferência e referencia.py
-    exemplos/   memoria_massa_bobcat.csv (arquivo de exemplo da demonstração)
+    exemplos/   memoria_massa_bobcat.csv e memoria_massa_bobcat_importacao.csv (o Bobcat nos dois formatos)
   frontend/     Next.js (seção 7)
     docs/       esta especificação e o protótipo
 ```
@@ -70,8 +73,8 @@ eficienciaEnergetica/
 Front (Next.js)                                    Backend (FastAPI)
 ───────────────                                    ─────────────────
 Configurações ── PUT /api/configuracao ─────────▶ configuracao_controller → service → repository → data/configuracao.json
-Envio ────────── POST /api/importacao/memoria-massa ▶ importacao_controller → service → repository (do Nicolas)
-                                                     → salva data/medicoes.csv + data/medicoes_info.json (contrato, seção 5.2)
+Envio ────────── POST /api/importacao/memoria-massa ▶ importacao_controller → importacao_service (do Nicolas)
+                                                     → salvar_medicoes() → data/medicoes.csv + data/medicoes_info.json (contrato, seção 5.2)
 Exemplo ──────── POST /api/medicoes/exemplo ─────▶ memoria_massa_controller → medicoes_service → medicoes_repository
                                                      → salva no mesmo contrato
 Painel, Contrato ideal, Histórico
@@ -119,7 +122,7 @@ Alertas ──────── GET /api/alertas ──────────
 
 ## 4. Regras do trabalho
 
-- **Branch:** crie `feat/front-e-previsao` antes de começar, se ainda não existir. No fim, abra um PR para o grupo revisar; não faça merge direto no `main`. Mantenha a branch atualizada com o `origin/main`, porque o Nicolas continua mexendo no backend. Enquanto a branch não tiver sido enviada, use rebase.
+- **Branch:** a `feat/front-e-previsao` já foi integrada ao `main`. Para o front, atualize o `main` e crie a branch `feat/front` a partir dele (seção 11). No fim, abra um PR para o grupo revisar; não faça merge direto no `main`. Mantenha a branch atualizada com o `origin/main`, porque o Nicolas continua mexendo no backend. Enquanto a branch não tiver sido enviada, use rebase.
 - **Antes de escrever código:** leia este arquivo, os protótipos, o backend e os arquivos de `backend/model/`. Depois me mostre um plano curto seguindo a seção 11 e espere meu ok.
 - **Uma etapa por vez.** Ao fim de cada uma, rode os testes (`pytest` no backend; `npm run lint`, `npm run build` e `npm test` no front) e me diga o que mudou. Faça commit só quando eu pedir, seguindo a seção 4.2.
 - **Não invente métricas nem textos.** Os números vêm do backend; os textos, desta especificação.
@@ -132,8 +135,9 @@ O código que já existe em `backend/` é do Nicolas, e é ele quem vai apresent
 2. `backend/app/main.py`: acrescentar 2 imports, `configuracao_router` e `memoria_massa_router`, logo depois dos imports dele. Acrescentar também 2 `app.include_router(...)` logo depois dos dele, no mesmo estilo.
 3. `backend/app/repositories/demanda_repository.py`: a função `buscar_demanda_contratada()` passa a ler a configuração, com 80.0 como padrão quando ainda não houver configuração, mais 1 import logo depois dos imports dele (seção 5.1).
 4. `backend/app/services/demanda_service.py`: a regra dos 5% (seção 5.6).
+5. `backend/app/controllers/importacao_controller.py` e `backend/app/services/importacao_service.py`: a mudança dos dois formatos (seção 5.8), combinada com ele em 13/11.
 
-**Estilo:** não reordene imports, não troque aspas nem formatação (nem espaços no fim das linhas), não apague comentários e não renomeie nada. Nenhum outro arquivo dele muda: controllers, os outros services, os arquivos de importação (`importacao_controller.py`, `importacao_service.py` e `importacao_repository.py`) e `data/consumo.csv` ficam intactos. Não crie `__init__.py`: o projeto dele funciona sem eles, e os módulos novos seguem o mesmo padrão.
+**Estilo:** não reordene imports, não troque aspas nem formatação (nem espaços no fim das linhas), não apague comentários e não renomeie nada. Nenhum outro arquivo dele muda: os outros controllers e services, o `importacao_repository.py` e o `data/consumo.csv` ficam intactos. Nos dois arquivos de importação, entra só o que está na seção 5.8. Não crie `__init__.py`: o projeto dele funciona sem eles, e os módulos novos seguem o mesmo padrão.
 
 **`.pyc` versionados:** os arquivos `backend/app/**/__pycache__/*.pyc` (Python 3.13) estão no repositório, e rodar o backend ou os testes regrava esses arquivos. Eles nunca entram nos commits:
 
@@ -144,9 +148,9 @@ Tirar os `.pyc` do repositório é decisão do Nicolas; a sugestão vai na descr
 
 ### 4.2 Commits
 
-Primeiro o backend, em commits por partes; depois o front inteiro, num commit só.
+O backend já está pronto: os commits 1 a 7 abaixo estão no `main` desde o PR de 05/11 e ficam aqui como registro do que existe. Agora vêm a mudança da importação e o front, num commit só.
 
-**Backend.** Faça uma parte por vez, na ordem abaixo. Em cada parte: implemente, rode o `pytest`, me mostre o diff e, com o meu ok, faça o commit antes de começar a próxima. O `main.py` muda nos commits 1, 4 e 5, então não adiante partes. Cada commit leva os próprios testes e deixa o backend rodando.
+**Backend (concluído).** Foi feito uma parte por vez, na ordem abaixo. Em cada parte: implemente, rode o `pytest`, me mostre o diff e, com o meu ok, faça o commit antes de começar a próxima. O `main.py` muda nos commits 1, 4 e 5, então não adiante partes. Cada commit leva os próprios testes e deixa o backend rodando.
 
 1. `chore: renomeia a API para Antevê`: só a linha do `title` em `main.py`.
 2. `chore: dependências e configuração dos testes`:
@@ -175,19 +179,20 @@ Primeiro o backend, em commits por partes; depois o front inteiro, num commit s�
 
 Antes de cada commit do backend, siga a regra dos `.pyc` (seção 4.1) e mostre `git status` e o diff dos arquivos do Nicolas.
 
-**Front.** Um commit só, depois do F9 e com tudo passando: `feat: front-end do Antevê`, com a pasta `frontend/` inteira (incluindo `frontend/docs/`) e o `README.md` da raiz.
+**Antes do front,** na branch `feat/front`, dois commits pequenos:
 
-**Descrição do PR.** Escreva para o Nicolas, que vai revisar e apresentar o backend:
+1. `chore: exemplo do Bobcat no formato da importação`, com `backend/exemplos/memoria_massa_bobcat_importacao.csv` (seção 9.1);
+2. `feat: importação aceita o formato da distribuidora (kW)`, com as duas mudanças da seção 5.8 nos arquivos do Nicolas e o teste novo. Antes do commit, mostre o diff dos arquivos dele.
 
-- o que mudou nos arquivos dele (seção 4.1), um commit por vez;
-- a regra dos 5%:
-  - a regra da ANEEL, com a fonte: https://www.copel.com/site/copel-distribuicao/para-sua-empresa/demanda/;
-  - as 3 linhas;
-  - o efeito: com 80 kW, `/alerta/risco` com 82 passa de `critico` para `normal`, e o formato das respostas não muda;
-- os módulos e as rotas novas (seção 6.2), e que a análise usa a `verificar_risco` dele para classificar cada mês;
-- que a análise lê o que a importação dele salva, no formato combinado (seção 5.2);
-- como instalar as dependências e rodar o `pytest`;
-- a sugestão de tirar os `.pyc` do repositório com `git rm --cached -- "*.pyc"`, num commit à parte, se ele concordar.
+**Front.** Um commit só, depois do F9 e com tudo passando: `feat: front-end do Antevê`, com a pasta `frontend/` inteira e o `README.md` da raiz. A documentação em `frontend/docs/` já está no `main`; entram só as mudanças nela.
+
+**Descrição do PR.** Escreva para o grupo:
+
+- a mudança na importação do Nicolas (seção 5.8): o que mudou nos dois arquivos dele, por quê (a memória de massa da distribuidora vem em kW, normalmente de 15 em 15 minutos) e o que o teste novo confere;
+- as telas e o que cada uma usa do backend (seção 6), e o modo claro e escuro;
+- que o envio do arquivo usa a importação do Nicolas, e o botão de exemplo usa `POST /medicoes/exemplo`;
+- como rodar: `npm run dev:tudo`, `npm run demo:zerar` e `npm run apresentacao`;
+- o roteiro da seção 13.
 
 Se o `gh` não estiver disponível, me passe o texto para eu colar no GitHub.
 
@@ -236,14 +241,14 @@ A importação é do Nicolas (`POST /importacao/memoria-massa`). A nossa parte s
   - cada importação substitui a anterior.
 - **`data/medicoes_info.json`** (opcional): `{"arquivo": "nome.csv", "importado_em": "2026-11-05T15:30:00", "origem": "upload"}`. Sem ele, use "arquivo enviado" como nome e a data de modificação do CSV.
 
-Enquanto a importação dele não salvar nesse formato, a nossa parte funciona com o arquivo de exemplo e com os testes, que gravam o contrato direto.
+A importação dele já salva nesse formato, e o arquivo de exemplo também.
 
 **Módulos:**
 
 - **`app/repositories/medicoes_repository.py`:**
   - `listar_medicoes()` lê `data/medicoes.csv` e devolve a série (kW por `data_hora`) ou `None`;
   - `buscar_info()` lê o JSON, se existir;
-  - `salvar_medicoes(serie, info)` grava os dois arquivos no formato do contrato. Só o arquivo de exemplo usa.
+  - `salvar_medicoes(serie, info)` grava os dois arquivos no formato do contrato. O arquivo de exemplo e a importação do Nicolas usam.
 - **`app/services/medicoes_service.py`:**
   - `importar_exemplo()` lê `backend/exemplos/memoria_massa_bobcat.csv` com `ler_memoria_massa` (copiada de `backend/model/referencia.py`) e salva no contrato, com `origem: "exemplo"`;
   - `resumo()` calcula, a partir do CSV salvo, o período, o intervalo (`intervalo_min` da referência), o total de leituras e os meses sem dados, e junta o que houver no JSON.
@@ -253,11 +258,22 @@ Enquanto a importação dele não salvar nesse formato, a nossa parte funciona c
 
   As duas devolvem `MedicoesResumo` (seção 6.2).
 
-**Combinado com o Nicolas,** para o envio do arquivo funcionar na apresentação:
+**Como a importação do Nicolas funciona** (commit `430ae98`, mais a mudança dos dois formatos):
 
-- a importação dele salva no contrato acima;
-- ela aceita o formato do arquivo de exemplo: `Data;Hora;Demanda ativa (kW)`, separador `;`, data `dd/mm/aaaa`, decimal com vírgula. Ele pode usar a `ler_memoria_massa` de `backend/model/referencia.py`, que também aceita `data_hora,demanda_kw` e devolve os erros em português. Se ele preferir outro formato, eu gero o arquivo de exemplo nele;
-- o front manda no formulário dele `nome_predio` (a razão social de Configurações), `demanda_contratada` (de Configurações) e `unidade` = `kW`. A demanda que vale para as contas continua sendo a de Configurações.
+- **aceita dois formatos de CSV** (decisão de 13/11). O front escolhe a `unidade` pelo cabeçalho do arquivo (seção 7.5):
+
+  | Formato | Cabeçalho | `unidade` |
+  |---|---|---|
+  | padrão | `timestamp,valor_eletricidade_original`, de hora em hora | `kwh` |
+  | distribuidora | `Data;Hora;Demanda ativa (kW)`, data `dd/mm/aaaa`, vírgula decimal; aceita leituras de 15 em 15 minutos | `kw` |
+
+  Ela converte para kW e salva no contrato acima, com `origem: "upload"`. De hora em hora, o kWh da hora e a demanda média em kW são o mesmo número;
+- **o formato da distribuidora entra com a mudança da seção 5.8.** Antes dela, esse arquivo volta com o erro "para este formato de arquivo, informe a unidade kwh";
+- recusa o envio se ainda não houver configuração ("Configure os dados da empresa antes de importar o CSV");
+- grava na configuração a `demanda_contratada` do formulário. Como o front manda a de Configurações, o valor não muda, mas a configuração ganha um `atualizado_em` novo;
+- os erros saem como 400 `{"detail": "mensagem"}`: arquivo ilegível, colunas faltando, mais de 1% de medições vazias, datas inválidas, valores negativos, horários repetidos ou intervalos irregulares.
+
+Os dois arquivos do Bobcat em `backend/exemplos/` têm os mesmos dados, um em cada formato (seção 9.1).
 
 ### 5.3 Análise (cálculos)
 
@@ -385,15 +401,87 @@ E em `verificar_ultrapassagens`:
     - sem modelos (`ANTEVE_MODEL_DIR` vazio) → `modelo: 'baseline'` com `kw_min ≤ kw ≤ kw_max`;
     - `GET /alertas` → o primeiro é o de `proximo-mes`, seguido de uma multa por mês com multa.
 
+### 5.8 Importação: os dois formatos
+
+Exceção à regra da seção 4.1, combinada com o Nicolas em 13/11. Nos arquivos de importação dele entram só estas duas mudanças, sem mexer em mais nada, nem na formatação. O resto da importação continua igual: as checagens, a conversão para kW, o salvamento e a atualização da configuração.
+
+**1. `app/controllers/importacao_controller.py`: liberar `kw`.** Trocar:
+
+```python
+    if unidade.strip().lower() != "kwh":
+        raise HTTPException(
+            status_code=400,
+            detail="para este formato de arquivo, informe a unidade kwh"
+        )
+```
+
+por:
+
+```python
+    if unidade.strip().lower() not in ("kw", "kwh"):
+        raise HTTPException(
+            status_code=400,
+            detail="informe a unidade kw ou kwh"
+        )
+```
+
+Com `kw`, o service dele já aceita leituras de 15 em 15 minutos. A regra de kWh só de hora em hora continua valendo para o formato padrão.
+
+**2. `app/services/importacao_service.py`: ler os dois formatos.** Colar a função abaixo antes da `ler_memoria_massa` (o arquivo já importa `io` e `pandas`) e, dentro do `try` da `ler_memoria_massa`, trocar `pd.read_csv(io.BytesIO(conteudo))` por `ler_csv(conteudo)`. Os erros de leitura continuam caindo no mesmo `except`, e uma data inválida no formato da distribuidora vira `NaT` e cai na checagem "CSV contém datas inválidas".
+
+```python
+def ler_csv(conteudo: bytes):
+    # lê o csv nos dois formatos aceitos e devolve sempre as colunas timestamp e valor_eletricidade_original
+    # formato padrão: timestamp,valor_eletricidade_original
+    # formato da distribuidora: Data;Hora;Demanda ativa (kW), com data dd/mm/aaaa e vírgula decimal
+    try:
+        texto = conteudo.decode("utf-8-sig")  # o utf-8-sig tira o BOM que o Excel coloca no começo
+    except UnicodeDecodeError:
+        texto = conteudo.decode("latin-1")  # arquivos salvos pelo Excel no Windows
+
+    primeira_linha = texto.split("\n", 1)[0]
+
+    if ";" not in primeira_linha:  # formato padrão, separado por vírgula
+        return pd.read_csv(io.StringIO(texto))
+
+    df = pd.read_csv(io.StringIO(texto), sep=";", dtype=str)
+    colunas = {coluna.strip().lower(): coluna for coluna in df.columns}
+    coluna_kw = next((coluna for nome, coluna in colunas.items() if "(kw)" in nome), None)
+
+    if "data" not in colunas or "hora" not in colunas or coluna_kw is None:
+        return df  # a verificação de colunas recusa o arquivo com a mensagem de sempre
+
+    valores = df[coluna_kw].str.strip()
+    if valores.str.contains(",", regex=False).any():  # vírgula decimal: tira o ponto do milhar e troca a vírgula
+        valores = valores.str.replace(".", "", regex=False).str.replace(",", ".", regex=False)
+
+    return pd.DataFrame({
+        "timestamp": pd.to_datetime(
+            df[colunas["data"]].str.strip() + " " + df[colunas["hora"]].str.strip(),
+            dayfirst=True,
+            errors="coerce"
+        ),
+        "valor_eletricidade_original": valores,
+    })
+```
+
+Essa função já foi testada com o pandas 3.1.1 do `requirements.txt`, junto com as mesmas checagens da importação: os dois arquivos do Bobcat dão a mesma série, e arquivos do Excel (com BOM ou em latin-1) passam.
+
+**Teste novo** (`tests/test_importacao_dois_formatos.py`), com a configuração da seção 9.3 salva antes por `PUT /configuracao` e `nome_predio` e `demanda_contratada` no formulário:
+
+- `memoria_massa_bobcat.csv` com `unidade` = `kw` e `memoria_massa_bobcat_importacao.csv` com `kwh` → 200 e `total_registros` = 13932 nos dois, e o mesmo `/analise/picos-mensais` depois de cada envio;
+- um arquivo da distribuidora de 15 em 15 minutos, gerado no teste: com `kw` → aceito; com `kwh` → 400 "Para arquivos em kwh, as medições devem ser de hora em hora";
+- `unidade` = `mwh` → 400 "informe a unidade kw ou kwh".
+
 ## 6. Rotas e dados
 
 O front chama `/api/...`, e o proxy repassa ao backend sem o prefixo.
 
-### 6.1 Rotas do Nicolas (intactas)
+### 6.1 Rotas do Nicolas
 
 As rotas dele continuam funcionando com o CSV dele (`/consumos`, `/consumos/total`, `/consumos/media`, `/consumo/maior`, `/consumo/menor`, `/consumo/indicadores`, `/demanda/ultrapassagens`, `/demanda/indicadores` e `/alerta/risco`). A rota `/status` não existe mais. O front usa:
 
-- `POST /importacao/memoria-massa`, dele, para o envio do arquivo. Em multipart, com `arquivo`, `nome_predio`, `demanda_contratada` e `unidade`. Responde `{ mensagem, Nome_predio, Demanda_contratada_kw, Unidade, total_registros, primeiros_registros }`; os erros vêm como `{ detail: string }` (status 400 ou 422);
+- `POST /importacao/memoria-massa`, dele, para o envio do arquivo (seção 5.2). Em multipart, com `arquivo`, `nome_predio`, `demanda_contratada` e `unidade` (`kwh` no formato padrão, `kw` no da distribuidora). Responde `{ mensagem, Nome_predio, Demanda_contratada_kw, Unidade, total_registros }`; os erros vêm como `{ detail: string }` (status 400). Se faltar um campo do formulário ou a demanda não for número, o FastAPI responde 422 com `detail` em lista; mande a demanda com ponto decimal (`String(80.5)`);
 - `GET /openapi.json`, que o FastAPI sempre tem, para mostrar se a API está no ar.
 
 ### 6.2 Rotas novas
@@ -421,7 +509,7 @@ GET  /medicoes/resumo  → MedicoesResumo                                // 404 
 
 type PicoMensal = {
   mes: string; rotulo: string                          // '2017-12', 'dez/17'
-  pico_kw: number | null; pico_em: string | null; consumo_kwh: number | null; leituras: number
+  pico_kw: number | null; pico_em: string | null; consumo_kwh: number | null; leituras: number   // consumo_kwh: não exibir
   situacao: Situacao | 'sem_dados'; faturada_rs: number | null; ultrapassagem_rs: number | null
 }
 type AnaliseResumo = {
@@ -458,7 +546,7 @@ GET /analise/recomendacoes  → Recomendacao[]
 // sem medições: 404; sem configuração: 409 { detail: "Cadastre o contrato em Configurações" }
 
 type PrevisaoProximoMes = {
-  mes: string; consumo_previsto_kwh: number
+  mes: string; consumo_previsto_kwh: number          // não exibir: o app mostra só kW
   pico_tipico_kw: number; pico_tipico_min_kw: number; pico_tipico_max_kw: number; pico_tipico_em: string
   risco: 'baixo' | 'medio' | 'alto'; aviso_sazonal: string
   meses_historico: { mes: string; pico_kw: number; situacao: Situacao }[]
@@ -487,7 +575,7 @@ A pasta `frontend/` já existe, com `docs/` dentro. Crie o app nela mesma:
 ```bash
 cd frontend
 npx create-next-app@latest . --ts --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm --yes
-npm i @tanstack/react-query recharts lucide-react
+npm i @tanstack/react-query recharts lucide-react next-themes
 npm i -D vitest concurrently
 ```
 
@@ -496,8 +584,9 @@ O `--yes` aceita o padrão nas perguntas que faltarem, para o comando não ficar
 - **`next.config.ts`:** `rewrites` de `/api/:path*` para `${process.env.API_URL ?? 'http://localhost:8000'}/:path*` (sem o `/api` no destino), com `API_URL` no `.env.local` e um `.env.example`.
 - **`.gitignore`:** o do `create-next-app` ignora `.env*`; acrescente `!.env.example`.
 - **Cliente:** `src/api/cliente.ts` com `fetch` em `/api` e erro tratado. Timeout de cerca de 3 s nas leituras e de 60 s no envio de arquivo. Hooks do TanStack Query em `src/api/hooks/`. O `QueryClientProvider` fica num `providers.tsx` com `'use client'`, usado no layout raiz.
-- **Depois de salvar a configuração ou enviar um arquivo,** invalide as consultas de medições, análise, previsão e alertas.
+- **Depois de salvar a configuração ou enviar um arquivo,** invalide as consultas de configuração, medições, análise, previsão e alertas. A importação do Nicolas também grava na configuração.
 - **Fonte:** `IBM_Plex_Sans` de `next/font/google` (pesos 400, 500, 600 e 700), aplicada no layout raiz.
+- **Tema:** `ThemeProvider` do `next-themes` no `providers.tsx`, com `attribute="class"`, `defaultTheme="system"`, `enableSystem` e `disableTransitionOnChange`. O `<html lang="pt-BR">` do layout raiz leva `suppressHydrationWarning`. O `next-themes` aplica o tema antes da pintura, então a página não pisca no tema errado, e guarda a escolha no navegador. Tokens e regras na seção 7.3; o botão, na 7.4.
 - **Demonstração:** a variável `NEXT_PUBLIC_DEMO=true` liga a barra de demonstração (seção 7.4).
 - **Testes desde o F1:** script `"test": "vitest run"` e um primeiro teste já no F1.
 - **Scripts**, a partir de `frontend/`:
@@ -518,7 +607,8 @@ frontend/
   scripts/zerar-demo.mjs
   src/
     app/
-      layout.tsx                      fonte e providers
+      layout.tsx                      fonte e providers (tema + TanStack Query)
+      globals.css                     tokens claros (:root) e escuros (.dark), @theme inline
       page.tsx                        primeiro acesso: /configuracoes ou /painel
       (app)/layout.tsx                menu lateral + cabeçalho
       (app)/painel/page.tsx
@@ -529,7 +619,7 @@ frontend/
       (app)/historico/page.tsx
     telas/                PainelTela, ContratoIdealTela, ConfiguracoesTela... (client components)
     api/                  tipos.ts, cliente.ts, hooks/
-    components/ui/        Card, ChipStatus, Botao, Segmentado, Tooltip, Medidor, EnvioArquivo...
+    components/ui/        Card, ChipStatus, Botao, Segmentado, Tooltip, Medidor, EnvioArquivo, BotaoTema...
     components/graficos/  PicosMensais, MapaPicos, EconomiaContrato
     lib/                  regras.ts, format.ts (pt-BR)
 ```
@@ -580,6 +670,32 @@ São fontes de uma ferramenta de design (`.dc.html`): HTML com estilos inline, `
 - Status sempre com ícone + texto, nunca só cor.
 - Formato brasileiro com `Intl.NumberFormat('pt-BR')`: 79,2 kW · R$ 3.402,96 · 31/12/2017 · 13h · dez/17.
 
+**Modo escuro**
+
+O protótipo só tem o modo claro; o escuro segue as tabelas abaixo. Os tokens viram variáveis CSS no `globals.css`: os valores claros ficam em `:root`, os escuros em `.dark`, e o `@theme inline` do Tailwind aponta para as variáveis (`--color-pagina: var(--pagina)` etc.). Assim, `bg-pagina`, `text-tinta` e as outras classes trocam sozinhas com o tema, sem `dark:` espalhado pelos componentes. Para os poucos casos que precisarem de `dark:`, use `@custom-variant dark (&:where(.dark, .dark *));`.
+
+| Token | Claro | Escuro |
+|---|---|---|
+| `pagina` | `#F2F2EE` | `#121315` |
+| `superficie` | `#FFFFFF` | `#1B1C1F` |
+| `menu` / `menu-ativo` | `#F8F8F5` / `#E8E8E2` | `#161719` / `#2A2C30` |
+| `borda` / `divisoria` / `eixo` | `#E2E2DC` / `#ECECE7` / `#C9C9C2` | `#33363B` / `#26282C` / `#4A4E55` |
+| `tinta` / `tinta-2` / `tinta-3` | `#16181B` / `#4C5157` / `#686D73` | `#EDEDE8` / `#B9BCC0` / `#9CA0A6` |
+
+| Situação no escuro | Preenchimento | Linha | Texto | Fundo | Borda |
+|---|---|---|---|---|---|
+| Dentro do contratado | `#87918A` | | `#7DCB9D` | `#16261D` | `#2A4A35` |
+| Acima do contratado / risco médio | `#E3A21F` | `#F2B544` | `#F2C46B` | `#2A2113` | `#4D3B17` |
+| Multa / risco alto | `#E0483C` | `#F0645A` | `#F79A90` | `#2D1714` | `#5C2A24` |
+
+- **Outras cores no escuro:** verde de economia `#66BE8C`; mapa dos picos 0 `#23252A` · até 20% `#463A20` · até 40% `#6B5223` · até 60% `#9A6D22` · até 80% `#C98D26` · acima `#F2B640` (no escuro, a classe mais quente é a mais clara); sem dados, hachurado com `#2C2E33`.
+- **Contraste já conferido no escuro:** texto com pelo menos 5,3:1 em todos os fundos, texto de situação com pelo menos 8:1, e barras e linhas com pelo menos 4,1:1 sobre a superfície.
+- **No claro,** `tinta-3` sobre `menu-ativo` fica em 4,24:1. No item ativo do menu, use `tinta` ou `tinta-2`.
+- **`color-scheme`:** `light` em `:root` e `dark` em `.dark`, para campos de formulário, seletor de horário e barras de rolagem acompanharem o tema.
+- **Gráficos (Recharts):** cores sempre por variável, nunca hex no componente: `fill="var(--multa-preenchimento)"`, `tick={{ fill: 'var(--tinta-3)' }}`, grade em `var(--divisoria)`. O tooltip é um componente próprio com `bg-superficie`, `border-borda` e `text-tinta`, porque o padrão do Recharts é branco.
+- **Sombras:** no escuro, os cards se separam pela borda e pela diferença entre `superficie` e `pagina`, não por sombra.
+- **Foco:** anel de 2px na cor `tinta`, afastado 2px, nos dois modos.
+
 ### 7.4 Telas
 
 **Layout comum**
@@ -588,7 +704,8 @@ São fontes de uma ferramenta de design (`.dc.html`): HTML com estilos inline, `
 - **Rodapé do menu:** empresa, cidade, grupo e modalidade, vindos da configuração.
 - **Cabeçalho:** título, selo da fonte e "Contratado X kW · Limite de multa Y kW · Editar contrato".
   - O selo diz "Memória de massa · dados até 31/12/2017", com a data de `GET /medicoes/resumo`, ou "Nenhum arquivo enviado".
-- **No celular:** o menu vira uma barra superior recolhível.
+  - **Botão de tema** (`BotaoTema`) no canto direito: ícone `Moon` no modo claro e `Sun` no escuro (lucide-react), com `aria-label` e `title` "Ativar modo escuro" ou "Ativar modo claro". Alterna entre claro e escuro pelo `resolvedTheme` do `useTheme()`. Antes de montar no cliente, mostre um botão vazio do mesmo tamanho, para não dar erro de hidratação.
+- **No celular:** o menu vira uma barra superior recolhível, com o botão de tema sempre à mostra.
 - **API fora do ar:** cada bloco mostra "API indisponível" com o botão "Tentar de novo". Não há dados de exemplo no front.
 
 **Primeiro acesso.** O `app/page.tsx` (server component) busca `${API_URL}/configuracao` direto no FastAPI. Com 404, faz `redirect('/configuracoes')`; com 200, `redirect('/painel')`; se o FastAPI estiver fora, vai para `/painel`.
@@ -608,7 +725,7 @@ São fontes de uma ferramenta de design (`.dc.html`): HTML com estilos inline, `
   - **API fora do ar:** aviso "API indisponível" e botão Salvar desabilitado. Não salve em lugar nenhum fingindo que deu certo.
 - **Seções numeradas:** 1 Dados da empresa, 2 Contrato de demanda, 3 Fonte de dados.
 - **Prévia ao vivo** "Limite de multa: 84,0 kW" enquanto a pessoa digita a demanda (`limiteMulta` de `regras.ts`). Aceita vírgula decimal e mostra até 2 casas, como em 85,05.
-- **Barra de zonas:** acompanha a digitação, com segmentos sólidos `#8A948D` (dentro), `#E3A21F` (tolerância) e `#C9372C` (multa), rótulos embaixo e sem marcas.
+- **Barra de zonas:** acompanha a digitação, com segmentos sólidos nas cores de preenchimento de dentro, acima (tolerância) e multa (seção 7.3), rótulos embaixo e sem marcas.
 - **Campos:**
   - tarifa de demanda;
   - horário de ponta, com a duração calculada;
@@ -622,12 +739,12 @@ São fontes de uma ferramenta de design (`.dc.html`): HTML com estilos inline, `
 
 **`/painel`, sem arquivo** (`GET /medicoes/resumo` responde 404). No lugar dos blocos, um card grande "Envie a memória de massa" com:
 
-- a área de arrastar e soltar ou clicar, que aceita `.csv` e envia para a importação do Nicolas (`POST /api/importacao/memoria-massa`, seção 6.1), com `nome_predio`, `demanda_contratada` e `unidade` = `kW` tirados de Configurações;
-- a linha de formato: "CSV da distribuidora (Data;Hora;kW) ou data_hora,demanda_kw";
+- a área de arrastar e soltar ou clicar, que aceita `.csv` e envia para a importação do Nicolas (`POST /api/importacao/memoria-massa`, seção 6.1). Vão junto `nome_predio` (a razão social) e `demanda_contratada`, tirados de Configurações, e a `unidade` do arquivo. Para escolher a unidade, o front lê a primeira linha do arquivo (`arquivo.slice(0, 1024).text()`) e usa `unidadeDoArquivo` (seção 7.5). A unidade só descreve o arquivo: a importação converte para kW, e a tela não mostra kWh. Se o arquivo não estiver em nenhum dos dois formatos, a importação recusa e o front mostra a mensagem dela;
+- a linha de formato: "CSV da distribuidora (Data;Hora;kW) ou no formato padrão (timestamp,valor_eletricidade_original)";
 - o botão secundário "Usar arquivo de exemplo", com a nota "prédio real do BDG2, 2016–2017", que chama `POST /medicoes/exemplo`;
 - durante o envio, o estado "Lendo o arquivo..." com progresso indeterminado;
-- erros do backend mostrados com o `detail` que vier, com o botão "Tentar outro arquivo";
-- depois de um envio aceito, o front busca o resumo de novo. Se o resumo não mudou, porque a importação ainda não salvou no contrato da seção 5.2, mostra "Arquivo lido, mas a importação ainda não salvou as leituras" no lugar dos blocos.
+- erros do backend mostrados com o `detail` que vier, com o botão "Tentar outro arquivo". Se o `detail` não for texto (422), mostre "Não foi possível enviar o arquivo"; se a resposta não for JSON (erro 500), mostre "Erro no servidor ao ler o arquivo";
+- depois de um envio aceito, o front busca o resumo de novo. Se o resumo não mudou, mostra "Arquivo lido, mas a importação não salvou as leituras" no lugar dos blocos.
 
 **`/painel`, com arquivo** (`Main.dc.html`, ramo `isMassa`). Tudo vem do backend.
 
@@ -648,10 +765,9 @@ São fontes de uma ferramenta de design (`.dc.html`): HTML com estilos inline, `
    - com 24 meses, as barras afinam. No celular, rolagem horizontal dentro do card.
 4. **Previsão para o próximo mês** (`/previsao/proximo-mes`):
    - chip de risco (baixo, médio ou alto);
-   - "Consumo previsto: X MWh";
    - "Pico típico previsto: A a B kW";
    - o aviso sazonal e a lista dos mesmos meses nos anos anteriores, com pico e situação;
-   - tag "Previsão por IA" com tooltip, que abre também com foco do teclado. O texto do tooltip está no `backend/model/README.md`. Se a resposta vier com `baseline`: "Previsão simples: modelo indisponível";
+   - tag "Previsão por IA" com tooltip, que abre também com foco do teclado. Texto do tooltip: "Modelo LightGBM treinado com dados reais de um prédio (BDG2). Prevê bem a demanda típica (erro médio de 2,8 kW, 6%, na próxima hora), mas não antecipa picos súbitos: por isso o risco de multa vem do histórico do mesmo mês." Se a resposta vier com `baseline`: "Previsão simples: modelo indisponível";
    - link "Simular contrato".
 5. **Mapa dos picos** (`/analise/mapa-picos`):
    - grade CSS de 7 × 24 com a escala da seção 7.3;
@@ -685,7 +801,7 @@ São fontes de uma ferramenta de design (`.dc.html`): HTML com estilos inline, `
   - chip e título;
   - o aviso sazonal;
   - os mesmos meses nos anos anteriores, num minigráfico de barras com a linha do limite;
-  - o pico típico previsto pelo modelo, com a nota "o modelo prevê o consumo típico; o risco vem do histórico";
+  - o pico típico previsto pelo modelo, com a nota "o modelo prevê a demanda típica; o risco vem do histórico";
   - "O que fazer", com as recomendações;
   - botão "Ver no painel".
 - **Multa registrada:**
@@ -693,20 +809,24 @@ São fontes de uma ferramenta de design (`.dc.html`): HTML com estilos inline, `
   - valor da ultrapassagem;
   - botão "Simular contrato".
 
-**`/historico`:** tabela de todos os meses (`/analise/picos-mensais`) com mês, pico, quando, situação, consumo (kWh), demanda faturada e ultrapassagem. Tem linha de total e meses sem dados marcados. Use o mesmo vocabulário visual.
+**`/historico`:** tabela de todos os meses (`/analise/picos-mensais`) com mês, pico (kW), quando, situação, demanda faturada e ultrapassagem. Tem linha de total e meses sem dados marcados. Use o mesmo vocabulário visual.
 
 ### 7.5 Regras no front (`src/lib/`)
 
 - **`regras.ts`:**
   - `limiteMulta(contratada, tolerancia = 0.05)`, para a prévia de Configurações;
   - o mapa de rótulos, ícones e cores por `Situacao` e por risco.
-- **`format.ts`:** kW, R$, kWh e MWh, datas, mês abreviado e hora, todos em pt-BR.
+- **`format.ts`:** kW, R$, datas, mês abreviado e hora, todos em pt-BR. Não há formatação de kWh nem de MWh.
+- **`arquivo.ts`:** `unidadeDoArquivo(primeiraLinha)` devolve `'kwh'` se a linha tiver `valor_eletricidade_original` (formato padrão, sem diferenciar maiúsculas) e `'kw'` nos outros casos (formato da distribuidora).
 - **Testes (Vitest):**
   - `limiteMulta(80)` = 84;
   - `limiteMulta(85)` = 89,25;
   - formatação de 3402.96 → "R$ 3.402,96";
   - `'2017-12'` → "dez/17";
-  - 79.25 → "79,3 kW".
+  - 79.25 → "79,3 kW";
+  - `unidadeDoArquivo('timestamp,valor_eletricidade_original')` = `'kwh'`, também com o BOM do Excel na frente (`'﻿...'`);
+  - `unidadeDoArquivo('Data;Hora;Demanda ativa (kW)')` = `'kw'`;
+  - todo token de `:root` no `globals.css` também existe em `.dark` (o teste lê o CSS e compara os nomes das variáveis).
 
 ## 8. Notificação do sistema: fora do escopo
 
@@ -726,6 +846,13 @@ Com a memória de massa, os avisos são mensais (risco do próximo mês e multas
 - previsão do próximo mês.
 
 Os testes do backend usam esses números.
+
+São dois arquivos com os mesmos dados, um em cada formato da importação (seção 5.2):
+
+- `memoria_massa_bobcat.csv`, no formato da distribuidora (`Data;Hora;Demanda ativa (kW)`). O botão "Usar arquivo de exemplo" também usa este;
+- `memoria_massa_bobcat_importacao.csv`, no formato padrão (`timestamp,valor_eletricidade_original`).
+
+Os dois dão a mesma série, então o painel mostra os mesmos valores do `model/README.md` com qualquer um.
 
 ### 9.2 Teste unitário da simulação (picos do protótipo)
 
@@ -779,36 +906,35 @@ Outros casos:
 
 - Desktop em 1440px é o principal, mas tudo funciona em 390px: menu no topo, grids em uma coluna, e gráficos e tabelas largos com rolagem horizontal dentro do card.
 - Use elementos reais (`<button>`, `<a>`, `<label>` + `<input>`), `aria-label` em botões só com ícone e foco visível. A área de envio de arquivo funciona com o teclado (Enter abre o seletor).
-- Texto com contraste de 4,5:1; os tokens já passam.
+- Texto com contraste de 4,5:1 nos dois modos (seção 7.3).
 - Status sempre com ícone + texto. Cada gráfico tem `aria-label` com um resumo, e o de picos mensais tem a alternativa em tabela.
 
 ## 11. Etapas
 
-Primeiro o backend inteiro, depois o front. Os commits seguem a seção 4.2.
+O backend (B1 a B4, commits 1 a 7) já está pronto e no `main`. Agora vêm a mudança da importação e o front.
 
-**Backend**
+**Preparação**
 
-1. **B1, base do backend** (commits 1 a 4):
-   - o título da API;
-   - dependências e testes;
-   - a regra dos 5%;
-   - a configuração.
-2. **B2, memória de massa** (commit 5): envio, exemplo e resumo.
-3. **B3, análise e contrato ideal** (commit 6).
-4. **B4, previsão do próximo mês e alertas** (commit 7).
+1. Atualize o `main` (`git restore -- "*.pyc"`, `git checkout main` e `git pull`) e crie a branch `feat/front` a partir dele.
+2. Confira com o `pytest` que o backend do `main` passa.
+3. Faça o commit `chore: exemplo do Bobcat no formato da importação` (seção 4.2).
+
+**Importação nos dois formatos**
+
+4. As duas mudanças e o teste novo da seção 5.8, com o `pytest` passando. Mostre o diff dos arquivos do Nicolas e, com o meu ok, faça o commit `feat: importação aceita o formato da distribuidora (kW)`.
 
 **Front** (um commit só, no fim)
 
-5. **F1, base:** tokens no Tailwind, fonte, layouts e rotas, proxy, TanStack Query, tipos, cliente, scripts e primeiro teste.
-6. **F2, `regras.ts` e `format.ts`,** com os testes da seção 7.5.
+5. **F1, base:** tokens claros e escuros no Tailwind, `next-themes` e botão de tema, fonte, layouts e rotas, proxy, TanStack Query, tipos, cliente, scripts e primeiro teste. O tema entra já no F1 para que cada tela nasça funcionando nos dois modos.
+6. **F2, `regras.ts`, `format.ts` e `arquivo.ts`,** com os testes da seção 7.5.
 7. **F3, Configurações e primeiro acesso.**
-8. **F4, painel sem arquivo:** envio do arquivo e botão de exemplo.
-9. **F5, painel com arquivo:** os 6 blocos.
+8. **F4, painel sem arquivo:** envio do arquivo pela importação do Nicolas e botão de exemplo.
+9. **F5, painel com arquivo:** os 6 blocos e a barra de demonstração.
 10. **F6, contrato ideal.**
 11. **F7, alertas.**
 12. **F8, histórico.**
 13. **F9, fechamento:**
-    - revisão em 390px e acessibilidade;
+    - revisão em 390px e 1440px nos dois modos, e acessibilidade;
     - `lint`, `build`, `test` e `pytest`;
     - `README.md` na raiz explicando `backend/` e `frontend/`, como instalar e rodar, o `demo:zerar` e o roteiro da seção 13.
 
@@ -816,12 +942,14 @@ Primeiro o backend inteiro, depois o front. Os commits seguem a seção 4.2.
 
 - **Testes:** `pytest` passa no backend; `npm run lint`, `npm run build` e `npm test` passam no front.
 - **Organização:** a raiz tem só as pastas `backend/` e `frontend/`.
-- **Código do Nicolas:** o diff dos arquivos dele mostra só o que está na seção 4.1, e nenhum `.pyc` entrou nos commits.
-- **Commits:** os do backend na ordem da seção 4.2, cada um com o `pytest` passando; o front num commit só.
+- **Código do Nicolas:** o diff dos arquivos dele mostra só o que está na seção 4.1 (incluindo a mudança da importação, seção 5.8), e nenhum `.pyc` entrou nos commits.
+- **Commits:** na branch `feat/front`, o commit do arquivo de exemplo, o da importação e o front num commit só.
+- **Unidade:** nenhuma tela mostra kWh ou MWh.
+- **Modo escuro:** o botão do cabeçalho alterna claro e escuro em todas as telas, inclusive gráficos, tooltips, mapa e formulários. A escolha continua depois de recarregar, o primeiro acesso segue o sistema, e a página não pisca no tema errado ao abrir.
 - **Fluxo completo:**
   1. Depois do `npm run demo:zerar`, o primeiro acesso leva às Configurações.
   2. Salvar 80 kW e R$ 12,89 leva ao painel vazio.
-  3. Enviar o arquivo do Bobcat faz o painel mostrar os números do `model/README.md`: multas, meses com multa, picos e previsão do próximo mês. Pelo botão de exemplo, isso já funciona com a nossa parte. Arrastando o arquivo, funciona quando a importação do Nicolas salvar no contrato da seção 5.2.
+  3. Arrastar qualquer um dos dois arquivos do Bobcat, ou usar o botão de exemplo, faz o painel mostrar os números do `model/README.md`: multas, meses com multa, picos e previsão do próximo mês.
 - **Mudar a contratada** em Configurações (exemplo: 90 kW) muda os meses com multa e os valores em todas as telas, batendo com a curva do contrato ideal.
 - **Contrato ideal:** atual, ótimo, recomendado e sem multa iguais ao `model/README.md`.
 - **Arquivo inválido** mostra a mensagem que a importação devolver.
@@ -831,15 +959,16 @@ Primeiro o backend inteiro, depois o front. Os commits seguem a seção 4.2.
 
 ## 13. Roteiro da apresentação (para o README da raiz)
 
-1. `npm run demo:zerar` e `npm run apresentacao`; abrir `http://localhost:3000`.
+1. `npm run demo:zerar` e `npm run apresentacao`; abrir `http://localhost:3000`. O app abre no modo do sistema: escolha o modo pelo botão do cabeçalho antes de começar (em projetor, o claro costuma ler melhor).
 2. **Configurações:** digitar 80 kW e R$ 12,89. O limite de 84 kW aparece enquanto digita. Mostrar o IoT como "Em breve".
-3. **Envio:** arrastar `backend/exemplos/memoria_massa_bobcat.csv`. Se arrastar der problema, usar o botão de exemplo.
+3. **Envio:** arrastar `backend/exemplos/memoria_massa_bobcat.csv`, no formato da distribuidora, como o cliente baixaria. Para mostrar que aceita os dois formatos, arrastar também `memoria_massa_bobcat_importacao.csv`: os números não mudam. Se arrastar der problema, usar o botão de exemplo.
 4. **Painel:**
    - quanto o prédio perdeu com multas e em quantos meses;
    - os picos por mês;
-   - a previsão do próximo mês (consumo pelo modelo, risco pelo histórico);
+   - a previsão do próximo mês (pico típico pelo modelo, risco pelo histórico);
    - o mapa dos horários de pico;
-   - as recomendações.
+   - as recomendações;
+   - o modo escuro, pelo botão do cabeçalho.
 5. **Contrato ideal:** mexer no simulador; mostrar o recomendado e quanto custaria zerar as multas.
 6. **Ao vivo:** mudar a contratada para 90 kW em Configurações e voltar ao painel.
 7. **Alertas:** abrir o alerta de risco do próximo mês.
