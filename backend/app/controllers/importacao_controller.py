@@ -16,10 +16,10 @@ async def importar_memoria_massa(
     unidade: str = Form(...)
 ):
 
-    if unidade.strip().lower() != "kwh":
+    if unidade.strip().lower() not in ("kw", "kwh"):
         raise HTTPException(
             status_code=400,
-            detail="para este formato de arquivo, informe a unidade kwh"
+            detail="informe a unidade kw ou kwh"
         )
     conteudo = await arquivo.read() 
 
