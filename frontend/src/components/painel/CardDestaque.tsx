@@ -47,6 +47,13 @@ export function CardDestaque({ resumo }: { resumo: AnaliseResumo }) {
                 Economia estimada no período:{' '}
                 <strong className="text-economia">{formatRs(rec.economia_rs)}</strong>
               </p>
+              {rec.meses_com_multa > 0 && (
+                <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-multa-borda bg-multa-fundo px-3 py-1 text-xs text-multa-texto">
+                  <span>
+                    Terá multa em <strong>{rec.meses_com_multa}</strong> {rec.meses_com_multa === 1 ? 'mês' : 'meses'} ({formatRs(rec.ultrapassagem_rs)})
+                  </span>
+                </div>
+              )}
               <Link
                 href="/contrato-ideal"
                 className="mt-3 inline-flex items-center rounded-md border border-borda bg-superficie px-3 py-1.5 text-sm font-medium text-tinta hover:bg-menu-ativo"

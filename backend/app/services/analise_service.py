@@ -195,6 +195,7 @@ def resumo_analise(serie, config):
             'contratada_kw': recomendado['contratada_kw'],
             'economia_rs': recomendado['economia_rs'],
             'meses_com_multa': recomendado['meses_com_multa'],
+            'ultrapassagem_rs': recomendado['ultrapassagem_rs'],
         },
     }
 
