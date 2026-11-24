@@ -1,6 +1,6 @@
 
 # language: pt
-
+@RF02
 Funcionalidade: Validação dos arquivos CSV
 
   Cenário: Tentar importar um arquivo vazio

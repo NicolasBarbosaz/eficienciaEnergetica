@@ -1,6 +1,7 @@
 
 # language: pt
 
+@RF01
 Funcionalidade: Importação de arquivos CSV
 
   Cenário: Importar um arquivo CSV válido

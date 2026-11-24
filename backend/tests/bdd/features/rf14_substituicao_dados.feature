@@ -1,6 +1,6 @@
 
 # language: pt
-
+@RF14
 Funcionalidade: Substituição dos dados importados
 
   Cenário: Substituir os dados de um prédio por outro
