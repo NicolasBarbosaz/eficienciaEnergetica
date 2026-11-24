@@ -70,6 +70,7 @@ export type AnaliseResumo = {
     contratada_kw: number;
     economia_rs: number;
     meses_com_multa: number;
+    ultrapassagem_rs: number;
   };
 };
 

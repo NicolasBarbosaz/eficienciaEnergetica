@@ -171,19 +171,33 @@ function Formulario({
         </Campo>
         <Campo rotulo="Modalidade" erro={erroDe('empresa.modalidade')}>
           <div className="flex gap-4">
-            {(['verde', 'azul'] as const).map((valor) => (
-              <label key={valor} className="inline-flex items-center gap-2 text-sm">
-                <input
-                  type="radio"
-                  name="modalidade"
-                  value={valor}
-                  checked={empresa.modalidade === valor}
-                  onChange={() => setEmpresa({ ...empresa, modalidade: valor })}
-                  className="h-4 w-4 accent-tinta"
-                />
-                <span className="capitalize">{valor}</span>
-              </label>
-            ))}
+            {(['verde', 'azul'] as const).map((valor) => {
+              const desabilitado = valor === 'azul';
+              return (
+                <label
+                  key={valor}
+                  className={`inline-flex items-center gap-2 text-sm ${
+                    desabilitado ? 'cursor-not-allowed opacity-70' : ''
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="modalidade"
+                    value={valor}
+                    checked={empresa.modalidade === valor}
+                    onChange={() => setEmpresa({ ...empresa, modalidade: valor })}
+                    disabled={desabilitado}
+                    className="h-4 w-4 accent-tinta"
+                  />
+                  <span className="capitalize">{valor}</span>
+                  {desabilitado && (
+                    <span className="rounded-full border border-borda bg-superficie px-2 py-0.5 text-xs text-tinta-3">
+                      Em breve
+                    </span>
+                  )}
+                </label>
+              );
+            })}
           </div>
         </Campo>
       </Secao>
