@@ -1,6 +1,6 @@
 
 # language: pt
-
+@RF04
 Funcionalidade: Resumo das medições importadas
 
   Cenário: Consultar resumo das medições
